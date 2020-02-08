@@ -3,12 +3,12 @@
     text-align: center;
 }
 
-#salelist {
+div {
     padding: 2% 0;
     background-color:hotpink;
 }
 
-#salelist > * {
+div > * {
     margin: 1% 2%;
 }
 
@@ -16,9 +16,31 @@ figure {
     display: inline-block;
 }
 
+h2 {
+    margin: 3% 0;
+}
+
+img {
+    height: 300px;
+    width: 300px;
+}
+
 button {
     height: 30px;
     width: 100px;
     margin: 3% 0;
-    background-color: yellow;
+    background-color: greenyellow;
+}
+
+#singleitem {
+    padding: 2% 0;
+    background-color: greenyellow;
+}
+
+#singleitem > * {
+    margin: 1% 2%;
+}
+
+.dynamic-content {
+   display: none;
 }
