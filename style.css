@@ -6,7 +6,6 @@
 #salelist {
     background-color: hotpink;
     padding: 2% 0;
-  
 }
 
 #salelist > * {
@@ -23,7 +22,7 @@ h2 {
 
 img {
     height: 300px;
-    width: 290px;
+    width: 300px;
 }
 
 a > button {
