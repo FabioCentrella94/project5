@@ -1,10 +1,8 @@
-let url = window.location.search;
-
-let teddyId = url.replace('?', '');
+let url = window.location.search.replace('?', '');
 
 let teddyRequest = new XMLHttpRequest();
 
-teddyRequest.open('GET', 'http://localhost:3000/api/teddies/' + teddyId);
+teddyRequest.open('GET', 'http://localhost:3000/api/teddies/' + url);
 teddyRequest.send();
 
 teddyRequest.onreadystatechange = () => {
