@@ -12,33 +12,43 @@ teddyRequest.onreadystatechange = () => {
         const response = JSON.parse(teddyRequest.response);
 
         let name = document.getElementById('name');
-        name.textContent = response.name;
         let image = document.getElementById('image');
-        image.src = response.imageUrl;
         let description = document.getElementById('description');
-        description.textContent = response.description;
         let price = document.getElementById('price');
-        price.textContent = '$' + (response.price / 100).toFixed(2);
 
-        for (i = 0; i < response.colors.length; i++) { 
-            let radioButtons = document.createElement('input');
-            radioButtons.type = 'radio';
-            radioButtons.name = 'color';
-            radioButtons.id = response.colors[i];
-            radioButtons.value = response.colors[i];
-            let radioButtonsText = document.createElement('label');
-            radioButtonsText.htmlFor = response.colors[i];
-            radioButtonsText.textContent = response.colors[i];
-            radioButtonsText.appendChild(radioButtons);
-            let figCaption = document.getElementById('figcaption');
-            figCaption.appendChild(radioButtonsText);                 
+        if (name != undefined && image != undefined && description != undefined && price != undefined && response.colors != undefined) {
+            name.textContent = response.name;
+            image.src = response.imageUrl;
+            description.textContent = response.description;
+            price.textContent = '$' + (response.price / 100).toFixed(2);
+        
+
+            for (i = 0; i < response.colors.length; i++) { 
+                let radioButtons = document.createElement('input');
+                radioButtons.type = 'radio';
+                radioButtons.name = 'color';
+                radioButtons.id = response.colors[i];
+                radioButtons.value = response.colors[i];
+                let radioButtonsText = document.createElement('label');
+                radioButtonsText.htmlFor = response.colors[i];
+                radioButtonsText.textContent = response.colors[i];
+                radioButtonsText.appendChild(radioButtons);
+                let figCaption = document.getElementById('figcaption');
+                figCaption.appendChild(radioButtonsText);                 
+            }  
+
+            let linebreak = document.createElement("br");
+            document.getElementById('figcaption').appendChild(linebreak);
+            let addToCart = document.createElement('button');
+            addToCart.textContent = 'Add To Cart';
+            let cart = [];
+            addToCart.addEventListener('click', () => {
+                cart.push(response);
+                localStorage.setItem('teddy', JSON.stringify(cart));     
+            })
+            document.getElementById('figcaption').appendChild(addToCart);
+
         }
-
-        let linebreak = document.createElement("br");
-        document.getElementById('figcaption').appendChild(linebreak);
-        let addToCart = document.createElement('button');
-        addToCart.textContent = 'Add To Cart';
-        document.getElementById('figcaption').appendChild(addToCart);
 
     }
 
