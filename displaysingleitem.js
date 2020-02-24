@@ -35,20 +35,45 @@ teddyRequest.onreadystatechange = () => {
                 radioButtonsText.appendChild(radioButtons);           
                 let figCaption = document.getElementById('figcaption');
                 figCaption.appendChild(radioButtonsText);         
-            } 
+            }
 
-            
-            
+            const teddy = {
+                id: response._id,
+                image: response.imageUrl,
+                color: '',
+                quantity: 0,
+                price: response.price
+            }
+
+            const addItemToCart = () => {
+                let teddyInCart = localStorage.getItem(response._id);
+                teddyInCart = JSON.parse(teddyInCart);
+                
+                if (teddyInCart != null) {
+                    teddyInCart[teddy.id].quantity += 1;                
+                } else {
+                    teddy.quantity = 1;
+                    teddyInCart = {
+                    [teddy.id] : teddy
+                }
+
+            }
+
+            localStorage.setItem(response._id, JSON.stringify(teddyInCart));
+        }
+                     
             let linebreak = document.createElement("br");
             document.getElementById('figcaption').appendChild(linebreak);
             let addToCart = document.createElement('button');
             addToCart.textContent = 'Add To Cart';
-            let cart = [];
+
             addToCart.addEventListener('click', () => {
-                cart.push(response);
-                localStorage.setItem(response._id, JSON.stringify(cart));
+                addItemToCart(teddy);    
             })
+
+
             document.getElementById('figcaption').appendChild(addToCart);
+
         }
 
     }
