@@ -32,11 +32,13 @@ teddyRequest.onreadystatechange = () => {
                 let radioButtonsText = document.createElement('label');
                 radioButtonsText.htmlFor = response.colors[i];
                 radioButtonsText.textContent = response.colors[i];
-                radioButtonsText.appendChild(radioButtons);
+                radioButtonsText.appendChild(radioButtons);           
                 let figCaption = document.getElementById('figcaption');
-                figCaption.appendChild(radioButtonsText);                 
-            }  
+                figCaption.appendChild(radioButtonsText);         
+            } 
 
+            
+            
             let linebreak = document.createElement("br");
             document.getElementById('figcaption').appendChild(linebreak);
             let addToCart = document.createElement('button');
@@ -44,10 +46,9 @@ teddyRequest.onreadystatechange = () => {
             let cart = [];
             addToCart.addEventListener('click', () => {
                 cart.push(response);
-                localStorage.setItem('teddy', JSON.stringify(cart));     
+                localStorage.setItem(response._id, JSON.stringify(cart));
             })
             document.getElementById('figcaption').appendChild(addToCart);
-
         }
 
     }
