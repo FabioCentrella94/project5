@@ -12,70 +12,95 @@ teddyRequest.onreadystatechange = () => {
         const response = JSON.parse(teddyRequest.response);
 
         let name = document.getElementById('name');
+        name.textContent = response.name;
         let image = document.getElementById('image');
+        image.src = response.imageUrl;
         let description = document.getElementById('description');
+        description.textContent = response.description;
         let price = document.getElementById('price');
-
-        if (name != undefined && image != undefined && description != undefined && price != undefined && response.colors != undefined) {
-            name.textContent = response.name;
-            image.src = response.imageUrl;
-            description.textContent = response.description;
-            price.textContent = '$' + (response.price / 100).toFixed(2);
+        price.textContent = '$' + (response.price / 100).toFixed(2);
         
+        let numbers = [1, 2, 3, 4, 5];
 
-            for (i = 0; i < response.colors.length; i++) { 
-                let radioButtons = document.createElement('input');
-                radioButtons.type = 'radio';
-                radioButtons.name = 'color';
-                radioButtons.id = response.colors[i];
-                radioButtons.value = response.colors[i];
-                let radioButtonsText = document.createElement('label');
-                radioButtonsText.htmlFor = response.colors[i];
-                radioButtonsText.textContent = response.colors[i];
-                radioButtonsText.appendChild(radioButtons);           
-                let figCaption = document.getElementById('figcaption');
-                figCaption.appendChild(radioButtonsText);         
+        let teddy = {
+            id: response._id,
+            image: response.imageUrl,
+            color: '',
+            quantity: 1,
+            price: response.price
+        }
+
+        for (i = 0; i < numbers.length; i++) { 
+            let chooseQuantity = document.createElement('p');
+            chooseQuantity.textContent = numbers[i];
+            let dropdown = document.getElementById('quantity');
+            dropdown.appendChild(chooseQuantity);
+            chooseQuantity.setAttribute('class', 'quantityoption')
+            let quantityOption = document.querySelectorAll('.quantityoption');
+            for (i = 0; i < quantityOption.length; i++) {
+                quantityOption[i].addEventListener('click', ($event) => {
+                    teddy.quantity = Number($event.target.textContent);                   
+                })
+             }                   
+        }
+
+        for (i = 0; i < response.colors.length; i++) { 
+            let colorsOption = document.createElement('p');
+            colorsOption.textContent = response.colors[i];
+            let dropdown = document.getElementById('color');
+            dropdown.appendChild(colorsOption); 
+            colorsOption.setAttribute('class', 'choosecolors')
+            let chooseColors = document.querySelectorAll('.choosecolors');
+            for (i = 0; i < chooseColors.length; i++) {
+                chooseColors[i].addEventListener('click', ($event) => {
+                    teddy.color = $event.target.textContent;
+                })
+             }                            
+        }
+
+        let figCaption = document.getElementById('figcaption'); 
+        let linebreak = document.createElement("br");
+        document.getElementById('figcaption').appendChild(linebreak);
+        let addToCart = document.createElement('button');
+        document.getElementById('figcaption').appendChild(addToCart);
+        addToCart.textContent = 'Add To Cart';
+        addToCart.addEventListener('click', () => {
+            totalItemInCart();
+            addItemToCart();    
+        });
+
+        const totalItemInCart = () => {
+            let totalItem = localStorage.getItem('totalitemincart');
+            totalItem = parseInt(totalItem);
+            if (totalItem) {
+                localStorage.setItem('totalitemincart', totalItem + teddy.quantity);
+            } else {
+                localStorage.setItem('totalitemincart', teddy.quantity);
             }
+        }
 
-            const teddy = {
-                id: response._id,
-                image: response.imageUrl,
-                color: '',
-                quantity: 0,
-                price: response.price
-            }
-
-            const addItemToCart = () => {
-                let teddyInCart = localStorage.getItem(response._id);
-                teddyInCart = JSON.parse(teddyInCart);
-                
-                if (teddyInCart != null) {
-                    teddyInCart[teddy.id].quantity += 1;                
-                } else {
-                    teddy.quantity = 1;
-                    teddyInCart = {
-                    [teddy.id] : teddy
+        const addItemToCart = () => {
+            itemInCart = localStorage.getItem(response._id);
+            itemInCart = JSON.parse(itemInCart);
+            if (itemInCart !== null) {
+                if (itemInCart[teddy.color] == undefined) {
+                    teddy.quantity /= 2;
+                    itemInCart = {
+                        ...itemInCart,
+                        [teddy.color] : teddy
+                    }              
                 }
 
+            itemInCart[teddy.color].quantity += teddy.quantity; 
+
+            } else {
+                itemInCart = {
+                    [teddy.color] : teddy
+                }            
             }
 
-            localStorage.setItem(response._id, JSON.stringify(teddyInCart));
-        }
-                     
-            let linebreak = document.createElement("br");
-            document.getElementById('figcaption').appendChild(linebreak);
-            let addToCart = document.createElement('button');
-            addToCart.textContent = 'Add To Cart';
-
-            addToCart.addEventListener('click', () => {
-                addItemToCart(teddy);    
-            })
-
-
-            document.getElementById('figcaption').appendChild(addToCart);
+            localStorage.setItem(response._id, JSON.stringify(itemInCart));
 
         }
-
     }
-
 }
