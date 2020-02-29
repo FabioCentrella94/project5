@@ -20,7 +20,7 @@ teddyRequest.onreadystatechange = () => {
         let price = document.getElementById('price');
         price.textContent = '$' + (response.price / 100).toFixed(2);
         
-        let numbers = [1, 2, 3, 4, 5];
+        let numbers = [1, 2, 3];
 
         let teddy = {
             id: response._id,
@@ -35,28 +35,36 @@ teddyRequest.onreadystatechange = () => {
             chooseQuantity.textContent = numbers[i];
             let dropdown = document.getElementById('quantity');
             dropdown.appendChild(chooseQuantity);
-            chooseQuantity.setAttribute('class', 'quantityoption')
-            let quantityOption = document.querySelectorAll('.quantityoption');
-            for (i = 0; i < quantityOption.length; i++) {
-                quantityOption[i].addEventListener('click', ($event) => {
-                    teddy.quantity = Number($event.target.textContent);                   
-                })
-             }                   
+            chooseQuantity.setAttribute('class', 'quantityoption')                         
         }
+
+        let quantityOption = document.querySelectorAll('.quantityoption');
+
+        for (i = 0; i < quantityOption.length; i++) {
+            quantityOption[i].addEventListener('click', ($event) => {
+                teddy.quantity = Number($event.target.textContent);
+                let quantitydrop = document.getElementById('quantitybutton');
+                quantitydrop.textContent = $event.target.textContent;                  
+            })
+         }   
 
         for (i = 0; i < response.colors.length; i++) { 
             let colorsOption = document.createElement('p');
             colorsOption.textContent = response.colors[i];
             let dropdown = document.getElementById('color');
             dropdown.appendChild(colorsOption); 
-            colorsOption.setAttribute('class', 'choosecolors')
-            let chooseColors = document.querySelectorAll('.choosecolors');
-            for (i = 0; i < chooseColors.length; i++) {
-                chooseColors[i].addEventListener('click', ($event) => {
-                    teddy.color = $event.target.textContent;
-                })
-             }                            
+            colorsOption.setAttribute('class', 'choosecolors')                 
         }
+
+        let chooseColors = document.querySelectorAll('.choosecolors'); 
+        
+        for (i = 0; i < chooseColors.length; i++) {
+            chooseColors[i].addEventListener('click', ($event) => {
+                teddy.color = $event.target.textContent;
+                let colorDrop = document.getElementById('colorbutton');
+                colorDrop.textContent = $event.target.textContent;
+            })
+         }  
 
         let figCaption = document.getElementById('figcaption'); 
         let linebreak = document.createElement("br");
@@ -66,7 +74,7 @@ teddyRequest.onreadystatechange = () => {
         addToCart.textContent = 'Add To Cart';
         addToCart.addEventListener('click', () => {
             totalItemInCart();
-            addItemToCart();    
+            addItemToCart();   
         });
 
         const totalItemInCart = () => {
@@ -82,7 +90,7 @@ teddyRequest.onreadystatechange = () => {
         const addItemToCart = () => {
             itemInCart = localStorage.getItem(response._id);
             itemInCart = JSON.parse(itemInCart);
-            if (itemInCart !== null) {
+            if (itemInCart !== null ) {
                 if (itemInCart[teddy.color] == undefined) {
                     teddy.quantity /= 2;
                     itemInCart = {
@@ -96,11 +104,11 @@ teddyRequest.onreadystatechange = () => {
             } else {
                 itemInCart = {
                     [teddy.color] : teddy
-                }            
+                }           
             }
 
             localStorage.setItem(response._id, JSON.stringify(itemInCart));
-
+    
         }
     }
 }
