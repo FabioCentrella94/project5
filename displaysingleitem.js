@@ -43,8 +43,8 @@ teddyRequest.onreadystatechange = () => {
         for (i = 0; i < quantityOption.length; i++) {
             quantityOption[i].addEventListener('click', ($event) => {
                 teddy.quantity = Number($event.target.textContent);
-                let quantitydrop = document.getElementById('quantitybutton');
-                quantitydrop.textContent = $event.target.textContent;                  
+                let quantityDropdown = document.getElementById('quantitybutton');
+                quantityDropdown.textContent = $event.target.textContent;                  
             })
          }   
 

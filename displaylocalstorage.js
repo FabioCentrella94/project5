@@ -2,6 +2,8 @@ let localStorageValues = [];
 for (let i in localStorage) {
     if (localStorage.hasOwnProperty(i)) {
         localStorageValues.push(JSON.parse(localStorage[i]));
+    } else {
+        localStorage.removeItem(localStorage[i]);
     }
 }
 
@@ -13,26 +15,95 @@ localStorageValues.forEach(function(obj) {
 })
 
 for (i = 0; i < cart.length; i++) {
-    let itemContainer = document.createElement('div');
-    itemContainer.style.display = 'flex';
-    itemContainer.style.flexFlow = 'row wrap';
-    itemContainer.style.justifyContent = 'space-around'
+    let itemContainer = document.createElement('figure');
     let image = document.createElement('img');
     image.src = cart[i].image;
     itemContainer.appendChild(image);
+    let figcaption = document.createElement('figcaption');
+    itemContainer.appendChild(figcaption);
     let color = document.createElement('p');
     color.textContent = cart[i].color;
-    itemContainer.appendChild(color);
-    let price = document.createElement('p');
-    price.textContent = '$' + (cart[i].price / 100).toFixed(2);
-    itemContainer.appendChild(price);
+    figcaption.appendChild(color);
+    let quantityContainer = document.createElement('div');
+    quantityContainer.style.display = 'flex';
+    quantityContainer.style.justifyContent = 'space-around';
+    quantityContainer.style.alignItems = 'center';
+    figcaption.appendChild(quantityContainer);
+    let minusButton = document.createElement('button');
+    minusButton.textContent = '-';
+    minusButton.value = cart[i].color;
+    minusButton.name = cart[i].id;
+    minusButton.setAttribute('class', 'minusbutton');
+    quantityContainer.appendChild(minusButton);
     let quantity = document.createElement('p');
     quantity.textContent = cart[i].quantity;
-    itemContainer.appendChild(quantity);
-    let totalPricePerItem = document.createElement('p');
-    totalPricePerItem.textContent = '$' + (cart[i].price * cart[i].quantity / 100).toFixed(2);
-    itemContainer.appendChild(totalPricePerItem);
+    quantityContainer.appendChild(quantity);
+    let plusButton = document.createElement('button');
+    plusButton.textContent = '+';
+    plusButton.value = cart[i].color;
+    plusButton.name = cart[i].id;
+    plusButton.setAttribute('class', 'plusbutton');
+    quantityContainer.appendChild(plusButton);
+    let price = document.createElement('p');
+    price.textContent = '$' + (cart[i].price / 100).toFixed(2);
+    figcaption.appendChild(price);
+    let removeItemButton = document.createElement('button');
+    removeItemButton.setAttribute('class', 'removeitem');
+    removeItemButton.textContent = 'Remove Item';
+    removeItemButton.value = cart[i].color;
+    removeItemButton.name = cart[i].id;
+    figcaption.appendChild(removeItemButton);
     let displayCart = document.getElementById('cart');
     displayCart.appendChild(itemContainer);
 }
+
+let reduceQuantity = document.querySelectorAll('.minusbutton');
+for (i = 0; i < reduceQuantity.length; i++) {
+    reduceQuantity[i].addEventListener('click', ($event) => {
+        let totalItem = localStorage.getItem('totalitemincart');
+        totalItem = parseInt(totalItem);
+        localStorage.setItem('totalitemincart', totalItem - 1);
+        itemInCart = localStorage.getItem($event.target.name);
+        itemInCart = JSON.parse(itemInCart);
+        if (itemInCart[$event.target.value].quantity > 1) {
+            itemInCart[$event.target.value].quantity -= 1; 
+        } else {
+            delete itemInCart[$event.target.value];
+        }
+        localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        removeKey();
+        location.reload();
+    })
+}
+
+let increaseQuantity = document.querySelectorAll('.plusbutton');
+for (i = 0; i < increaseQuantity.length; i++) {
+    increaseQuantity[i].addEventListener('click', ($event) => {
+        let totalItem = localStorage.getItem('totalitemincart');
+        totalItem = parseInt(totalItem);
+        localStorage.setItem('totalitemincart', totalItem + 1);
+        itemInCart = localStorage.getItem($event.target.name);
+        itemInCart = JSON.parse(itemInCart);
+        itemInCart[$event.target.value].quantity += 1;
+        localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        location.reload();
+    })
+}
+
+
+let removeItem = document.querySelectorAll('.removeitem');
+for (i = 0; i < removeItem.length; i++) {
+    removeItem[i].addEventListener('click', ($event) => {
+        let totalItem = localStorage.getItem('totalitemincart');
+        totalItem = parseInt(totalItem);
+        itemInCart = localStorage.getItem($event.target.name);
+        itemInCart = JSON.parse(itemInCart);
+        localStorage.setItem('totalitemincart', totalItem - itemInCart[$event.target.value].quantity);
+        delete itemInCart[$event.target.value];      
+        localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        location.reload();
+    })
+}
+
+
 
