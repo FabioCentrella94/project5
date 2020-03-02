@@ -74,7 +74,8 @@ teddyRequest.onreadystatechange = () => {
         addToCart.textContent = 'Add To Cart';
         addToCart.addEventListener('click', () => {
             totalItemInCart();
-            addItemToCart();   
+            addItemToCart();
+            totalCost();   
         });
 
         const totalItemInCart = () => {
@@ -107,8 +108,17 @@ teddyRequest.onreadystatechange = () => {
                 }           
             }
 
-            localStorage.setItem(response._id, JSON.stringify(itemInCart));
-    
+            localStorage.setItem(response._id, JSON.stringify(itemInCart));  
+        }
+
+        const totalCost = () => {
+            let cartCost = localStorage.getItem('totalcost');
+            if (cartCost != null) {
+                cartCost = parseInt(cartCost);
+                localStorage.setItem('totalcost', cartCost + (teddy.price * teddy.quantity));
+            } else {
+                localStorage.setItem('totalcost', teddy.price * teddy.quantity);
+            }
         }
     }
 }

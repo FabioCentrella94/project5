@@ -2,9 +2,7 @@ let localStorageValues = [];
 for (let i in localStorage) {
     if (localStorage.hasOwnProperty(i)) {
         localStorageValues.push(JSON.parse(localStorage[i]));
-    } else {
-        localStorage.removeItem(localStorage[i]);
-    }
+    } 
 }
 
 let cart = [];
@@ -65,13 +63,15 @@ for (i = 0; i < reduceQuantity.length; i++) {
         localStorage.setItem('totalitemincart', totalItem - 1);
         itemInCart = localStorage.getItem($event.target.name);
         itemInCart = JSON.parse(itemInCart);
+        let totalCost = localStorage.getItem('totalcost');
+        totalCost = parseInt(totalCost);
+        localStorage.setItem('totalcost', totalCost - itemInCart[$event.target.value].price);
         if (itemInCart[$event.target.value].quantity > 1) {
             itemInCart[$event.target.value].quantity -= 1; 
         } else {
             delete itemInCart[$event.target.value];
         }
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
-        removeKey();
         location.reload();
     })
 }
@@ -86,6 +86,9 @@ for (i = 0; i < increaseQuantity.length; i++) {
         itemInCart = JSON.parse(itemInCart);
         itemInCart[$event.target.value].quantity += 1;
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        let totalCost = localStorage.getItem('totalcost');
+        totalCost = parseInt(totalCost);
+        localStorage.setItem('totalcost', totalCost + itemInCart[$event.target.value].price);
         location.reload();
     })
 }
@@ -98,12 +101,12 @@ for (i = 0; i < removeItem.length; i++) {
         totalItem = parseInt(totalItem);
         itemInCart = localStorage.getItem($event.target.name);
         itemInCart = JSON.parse(itemInCart);
+        let totalCost = localStorage.getItem('totalcost');
+        totalCost = parseInt(totalCost);
+        localStorage.setItem('totalcost', totalCost - (itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity));
         localStorage.setItem('totalitemincart', totalItem - itemInCart[$event.target.value].quantity);
         delete itemInCart[$event.target.value];      
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
         location.reload();
     })
 }
-
-
-
