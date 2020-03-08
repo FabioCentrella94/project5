@@ -12,6 +12,15 @@ localStorageValues.forEach(function(obj) {
     })   
 })
 
+console.log(cart)
+
+let arrayOfId = [];
+for (i = 0; i < cart.length; i++) {
+    arrayOfId.push(cart[i]);
+}
+
+console.log(arrayOfId)
+
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
     let image = document.createElement('img');

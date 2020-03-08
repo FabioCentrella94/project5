@@ -1,3 +1,11 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
 * {
     box-sizing: border-box;
     text-align: center;
@@ -34,14 +42,6 @@ a > button {
 
 #singleitem {
     background-color: greenyellow;
-}
-
-label {
-    margin: 0 1%;
-}
-
-label > * {
-    margin: 0 1%;
 }
 
 #figcaption > button {
@@ -93,13 +93,43 @@ label > * {
     display: block;
 }
 
-#cart {
+#cartpage {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+}
+
+@media only screen and (max-width: 480px) {
+    #cartpage {
+        display: block;
+    }
+}
+
+#cart {
+    flex: 1;
+    overflow: auto;
+    background-color: tomato;
 }
 
 #cart > * {
-    margin: 0 0;
+    margin: 1% auto;
 }
+
+
+#form {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+}
+
+input {
+    border: 1px solid black;
+    width: 300px;
+}
+
+
 
