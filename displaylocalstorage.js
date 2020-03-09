@@ -89,6 +89,9 @@ for (i = 0; i < reduceQuantity.length; i++) {
             delete itemInCart[$event.target.value];
         }
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        if (localStorage.getItem($event.target.name) == '{}') {
+            localStorage.removeItem($event.target.name)
+        }
         location.reload();
     })
 }
@@ -124,6 +127,9 @@ for (i = 0; i < removeItem.length; i++) {
         localStorage.setItem('totalitemincart', totalItem - itemInCart[$event.target.value].quantity);
         delete itemInCart[$event.target.value];      
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        if (localStorage.getItem($event.target.name) == '{}') {
+            localStorage.removeItem($event.target.name)
+        }
         location.reload();
     })
 }
