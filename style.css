@@ -103,6 +103,9 @@ a > button {
     body {
         height: unset;
     }
+    footer > * {
+        margin: 2% 0;
+    }
 }
 
 #cart {

@@ -1,5 +1,10 @@
-let displayTotalItemInCart = document.getElementById('displaytotalitem');
-displayTotalItemInCart.textContent = localStorage.getItem('totalitemincart');
+if (localStorage.getItem("totalitemincart") === null) {
+    let displayTotalItemInCart = document.getElementById('displaytotalitem');
+    displayTotalItemInCart.textContent = 0;
+} else {
+    document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
+}
+
 
 let localStorageValues = [];
 for (let i in localStorage) {
