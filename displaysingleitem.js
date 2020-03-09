@@ -8,7 +8,7 @@ const promise = new Promise((resolve, reject) => {
         if (apiRequest.status === 200) {
           resolve(JSON.parse(apiRequest.response));
         } else {
-          reject(JSON.parse(apiRequest.response))
+          reject(apiRequest.response)
         }
       }
     }
