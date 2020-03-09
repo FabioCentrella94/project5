@@ -6,11 +6,31 @@
         <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="style.css" type="text/css">
+        <script src="https://kit.fontawesome.com/dc16209174.js" crossorigin="anonymous"></script>
         <script src="displaysingleitem.js" type="text/javascript"></script>
     </head>
 
     <body id="singleitem">
 
+        <header>
+
+            <img src="images/1576141243078_Orinoco logo.png" alt="Company Logo">
+
+            <nav>
+                <a href="index.html">
+                    <i class="fas fa-home cart"></i>
+                </a>
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart cart" id="displaytotalitem"></i>      
+                </a>
+                <a href="#contact">
+                    <i class="fas fa-phone cart"></i>     
+                </a>
+            </nav>
+
+        </header>
+
+        <div id="item">
             <figure>
                 <h1 id="name"></h1>
                 <img id="image" src="" alt="">
@@ -19,18 +39,34 @@
                     <p id="price"></p>
                     <div class="quantity-personalization">
                         <div class="dropdown">
-                            <button class="dropbtn" id="colorbutton">Select Color</button>
+                            <button class="dropbtn" id="colorbutton"></button>
                             <div class="dropdown-content" id="color">
                             </div>
                         </div>
-
+    
                         <div class="dropdown">
-                            <button class="dropbtn" id="quantitybutton">Select Quantity</button>
+                            <button class="dropbtn" id="quantitybutton">1</button>
                             <div class="dropdown-content" id="quantity">
                             </div>
                         </div>
                     </div>
                 </figcaption>
             </figure>
+        </div>
+
+            <footer id="contact">
+
+                <a href="tel:07563145674">
+                    <i class="fas fa-phone"></i>
+                    07563145674
+                </a>
+    
+                <a href="mailto:orinoco@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    orinoco@gmail.com
+                </a>
+    
+            </footer>
+
     </body>
 </html>

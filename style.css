@@ -12,16 +12,14 @@ body {
 }
 
 #salelist {
-    background-color: hotpink;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
     padding: 2% 0;
 }
 
 #salelist > * {
     margin: 1% 2%;
-}
-
-figure {
-    display: inline-block;
 }
 
 h2 {
@@ -37,28 +35,23 @@ a > button {
     height: 30px;
     width: 100px;
     margin: 10% 0;
-    background-color: greenyellow;
-}
-
-#singleitem {
-    background-color: greenyellow;
+    background-color: orange;
 }
 
 #figcaption > button {
     height: 30px;
     width: 100px;
     margin: 10% 0;
-    background-color: hotpink;
+    background-color: orange;
 }
 
 .quantity-personalization {
-    margin: auto auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;   
 }
 
 .dropbtn {
-    background-color: hotpink;
+    background-color: orange;
     font-size: 16px;
     border: none;
     min-width: 100px;
@@ -95,22 +88,31 @@ a > button {
 
 #cartpage {
     display: flex;
+    height: 100%;
+    
 }
 
 @media only screen and (max-width: 480px) {
     #cartpage {
         display: block;
     }
+    nav {
+        padding: 5% 0;
+        width: 100% !important;
+    }
+    body {
+        height: unset;
+    }
 }
 
 #cart {
     flex: 1;
-    overflow: auto;
-    background-color: tomato;
+    overflow-y: scroll;
+    padding: 1% 0;
 }
 
 #cart > * {
-    margin: 1% auto;
+    margin: 5% auto;
 }
 
 
@@ -119,11 +121,14 @@ a > button {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 10% 0;
 }
 
 form {
     display: flex;
     flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 input {
@@ -131,5 +136,57 @@ input {
     width: 300px;
 }
 
+header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 2% 0;
+    background-color: orange;
+}
 
+header > img {
+    height: 90px;
+    width: 300px;
+    
+}
 
+.cart {
+    font-size: 40px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 20%;
+}
+
+footer {
+    background-color: orange;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 2% 0;
+}
+
+footer > * {
+    font-size: 25px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+#item {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: orange;
+    border-radius: 5000px;
+}
+
+form > button {
+    width: 50%;
+}

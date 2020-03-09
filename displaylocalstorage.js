@@ -1,3 +1,6 @@
+let displayTotalItemInCart = document.getElementById('displaytotalitem');
+displayTotalItemInCart.textContent = localStorage.getItem('totalitemincart');
+
 let localStorageValues = [];
 for (let i in localStorage) {
     if (localStorage.hasOwnProperty(i)) {
@@ -12,14 +15,11 @@ localStorageValues.forEach(function(obj) {
     })   
 })
 
-console.log(cart)
-
-let arrayOfId = [];
+let arraysofId = [];
 for (i = 0; i < cart.length; i++) {
-    arrayOfId.push(cart[i]);
+    arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
 }
-
-console.log(arrayOfId)
+let checkoutArrayId = [].concat.apply([], arraysofId);
 
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
@@ -31,6 +31,9 @@ for (i = 0; i < cart.length; i++) {
     let color = document.createElement('p');
     color.textContent = cart[i].color;
     figcaption.appendChild(color);
+    let price = document.createElement('p');
+    price.textContent = '$' + (cart[i].price / 100).toFixed(2);
+    figcaption.appendChild(price);
     let quantityContainer = document.createElement('div');
     quantityContainer.style.display = 'flex';
     quantityContainer.style.justifyContent = 'space-around';
@@ -51,9 +54,9 @@ for (i = 0; i < cart.length; i++) {
     plusButton.name = cart[i].id;
     plusButton.setAttribute('class', 'plusbutton');
     quantityContainer.appendChild(plusButton);
-    let price = document.createElement('p');
-    price.textContent = '$' + (cart[i].price / 100).toFixed(2);
-    figcaption.appendChild(price);
+    let totalPrice = document.createElement('p');
+    totalPrice.textContent = '$' + ((cart[i].price * cart[i].quantity) / 100).toFixed(2);
+    figcaption.appendChild(totalPrice);
     let removeItemButton = document.createElement('button');
     removeItemButton.setAttribute('class', 'removeitem');
     removeItemButton.textContent = 'Remove Item';

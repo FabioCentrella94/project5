@@ -31,7 +31,7 @@ teddyRequest.onreadystatechange = () => {
             let teddy = {
                 id: response._id,
                 image: response.imageUrl,
-                color: '',
+                color: response.colors[0],
                 quantity: 1,
                 price: response.price
             }
@@ -52,7 +52,7 @@ teddyRequest.onreadystatechange = () => {
                     let quantityDropdown = document.getElementById('quantitybutton');
                     quantityDropdown.textContent = $event.target.textContent;                  
                 })
-            }   
+            } 
 
             for (i = 0; i < response.colors.length; i++) { 
                 let colorsOption = document.createElement('p');
@@ -65,12 +65,13 @@ teddyRequest.onreadystatechange = () => {
             let chooseColors = document.querySelectorAll('.choosecolors'); 
         
             for (i = 0; i < chooseColors.length; i++) {
+                let colorDrop = document.getElementById('colorbutton');
+                colorDrop.textContent = response.colors[0];
                 chooseColors[i].addEventListener('click', ($event) => {
                     teddy.color = $event.target.textContent;
-                    let colorDrop = document.getElementById('colorbutton');
                     colorDrop.textContent = $event.target.textContent;
                 })
-            }  
+            } 
 
             let figCaption = document.getElementById('figcaption'); 
             let linebreak = document.createElement("br");
@@ -81,8 +82,13 @@ teddyRequest.onreadystatechange = () => {
             addToCart.addEventListener('click', () => {
                 totalItemInCart();
                 addItemToCart();
-                totalCost();   
+                totalCost();
+                location.reload();   
             });
+
+            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+            displayTotalItemInCart.textContent = localStorage.getItem('totalitemincart');
+            
 
             const totalItemInCart = () => {
                 let totalItem = localStorage.getItem('totalitemincart');
@@ -109,9 +115,9 @@ teddyRequest.onreadystatechange = () => {
                 itemInCart[teddy.color].quantity += teddy.quantity; 
 
                 } else {
-                    itemInCart = [
-                        teddy.color = {teddy} 
-                    ]          
+                    itemInCart = {
+                        [teddy.color] : teddy 
+                    }          
                 }
 
                 localStorage.setItem(response._id, JSON.stringify(itemInCart));  

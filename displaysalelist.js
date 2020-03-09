@@ -34,6 +34,8 @@ apiRequest.onreadystatechange = () => {
         viewItemButton.textContent = 'View Item';
         link.appendChild(viewItemButton); 
       }
+      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+displayTotalItemInCart.textContent = localStorage.getItem('totalitemincart');
     }
   }
 }
