@@ -133,3 +133,34 @@ for (i = 0; i < removeItem.length; i++) {
         location.reload();
     })
 }
+
+let contact = {
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    email: ''
+}
+
+let checkoutInputField = document.querySelectorAll('input');
+if (checkoutArrayId.length >= 1) {
+    let checkoutButton = document.getElementById('submitorder');
+    checkoutButton.removeAttribute('disabled');
+    for (i = 0; i < checkoutInputField.length; i++) {
+        checkoutInputField[i].removeAttribute('disabled');
+        checkoutInputField[i].style.backgroundColor = 'white';
+        checkoutInputField[i].style.cursor = 'auto'
+    }
+}
+
+
+for (i = 0; i < checkoutInputField.length; i++) {
+    checkoutInputField[i].addEventListener('blur', ($event) => {
+        if ($event.target.value < 1 || !$event.target.value.match($event.target.pattern) ) {
+            $event.target.style.border = '2px solid red';
+        } else {
+            $event.target.style.border = '2px solid greenyellow';
+        }
+    })
+}
+

@@ -138,6 +138,11 @@ input {
     border: 1px solid black;
     width: 300px;
     height: 30px;
+    background-color: #E8E8E8;
+}
+
+input:hover {
+    cursor: not-allowed;
 }
 
 header {
@@ -194,4 +199,8 @@ button {
 
 form > button {
     width: 50%;
+}
+
+#submitorder:hover {
+    cursor: not-allowed;
 }
