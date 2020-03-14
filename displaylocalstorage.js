@@ -142,25 +142,37 @@ let contact = {
     email: ''
 }
 
+let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
 if (checkoutArrayId.length >= 1) {
-    let checkoutButton = document.getElementById('submitorder');
     checkoutButton.removeAttribute('disabled');
+    checkoutButton.style.cursor = 'auto';
     for (i = 0; i < checkoutInputField.length; i++) {
         checkoutInputField[i].removeAttribute('disabled');
         checkoutInputField[i].style.backgroundColor = 'white';
-        checkoutInputField[i].style.cursor = 'auto'
+        checkoutInputField[i].style.cursor = 'auto';
+        checkoutInputField[i].addEventListener('blur', ($event) => {
+            if ($event.target.value < 1 || !$event.target.value.match($event.target.pattern) ) {
+                $event.target.style.border = '2px solid red';         
+            } else {
+                $event.target.style.border = '2px solid greenyellow';
+            }
+        })
     }
 }
 
 
-for (i = 0; i < checkoutInputField.length; i++) {
-    checkoutInputField[i].addEventListener('blur', ($event) => {
-        if ($event.target.value < 1 || !$event.target.value.match($event.target.pattern) ) {
-            $event.target.style.border = '2px solid red';
-        } else {
-            $event.target.style.border = '2px solid greenyellow';
-        }
-    })
+checkoutButton.addEventListener('click', ($event) => {
+    $event.preventDefault();
+    setContactValues();
+    console.log(contact);
+})
+
+const setContactValues = () => {
+    contact.firstName = checkoutInputField[0].value;
+    contact.lastName = checkoutInputField[1].value;
+    contact.address = checkoutInputField[2].value;
+    contact.city = checkoutInputField[3].value;
+    contact.email = checkoutInputField[4].value;
 }
 
