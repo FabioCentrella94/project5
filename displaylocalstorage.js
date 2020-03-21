@@ -24,7 +24,7 @@ let arraysofId = [];
 for (i = 0; i < cart.length; i++) {
     arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
 }
-let checkoutArrayId = [].concat.apply([], arraysofId);
+let products = [].concat.apply([], arraysofId);
 
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
@@ -144,7 +144,7 @@ let contact = {
 
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
-if (checkoutArrayId.length >= 1) {
+if (products.length >= 1) {
     checkoutButton.removeAttribute('disabled');
     checkoutButton.style.cursor = 'auto';
     for (i = 0; i < checkoutInputField.length; i++) {
@@ -161,11 +161,10 @@ if (checkoutArrayId.length >= 1) {
     }
 }
 
-
 checkoutButton.addEventListener('click', ($event) => {
     $event.preventDefault();
     setContactValues();
-    console.log(contact);
+    submitOrder();
 })
 
 const setContactValues = () => {
@@ -176,3 +175,33 @@ const setContactValues = () => {
     contact.email = checkoutInputField[4].value;
 }
 
+const submitOrder = () => {
+    const promise = new Promise((resolve, reject) => {
+        let postRequest = new XMLHttpRequest();
+        let data = {contact: contact, products: products}
+        let url = 'http://localhost:3000/api/teddies/order';
+        postRequest.open('POST', url, true);
+        postRequest.setRequestHeader('Content-type', 'application/json');
+        postRequest.send(JSON.stringify(data));
+        postRequest.onreadystatechange = () => {
+            if (postRequest.readyState === 4) {
+                if (postRequest.status === 201) {
+                    resolve(JSON.parse(postRequest.response));
+                } else {
+                    reject(postRequest.response);
+                }
+            }
+        }
+    })
+    promise.then((response) => {
+        sessionStorage.setItem('ordertotalprice', localStorage.getItem('totalcost'));
+        localStorage.clear();
+        sessionStorage.setItem('orderdetail', JSON.stringify(response));
+        for (i = 0; i < checkoutInputField.length; i++) {
+            checkoutInputField[i].value = '';
+        }
+        location.href = 'orderconfirmation.html';   
+    }).catch((error) => {
+        alert(error);
+    })
+}

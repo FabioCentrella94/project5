@@ -31,7 +31,7 @@ promise.then((response) => {
     figureCaption.appendChild(link);
     let viewItemButton = document.createElement('button');     
     viewItemButton.textContent = 'View Item';
-    link.appendChild(viewItemButton); 
+    link.appendChild(viewItemButton);
   }  
   if (localStorage.getItem("totalitemincart") === null) {
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
