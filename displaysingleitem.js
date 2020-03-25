@@ -1,3 +1,4 @@
+// fetch different data from server based on the query string and displaying the product with image, name, description, price, color personalisation, quantity and button to add it to the cart:
 const promise = new Promise((resolve, reject) => {
     let url = window.location.search.replace('?', '');
     let apiRequest = new XMLHttpRequest();
@@ -13,7 +14,6 @@ const promise = new Promise((resolve, reject) => {
       }
     }
 })
-  
 promise.then((response) => {
     let name = document.getElementById('name');
     name.textContent = response.name;
@@ -26,6 +26,7 @@ promise.then((response) => {
         
     let numbers = [1, 2, 3];
 
+    // set an object with different properties equal to the response got from the server:
     let teddy = {
         id: response._id,
         image: response.imageUrl,
@@ -34,6 +35,7 @@ promise.then((response) => {
         price: response.price
     }
 
+    // for each number in the array number create a 'p' element and append them to the dropdown to choose the quantity:
     for (i = 0; i < numbers.length; i++) { 
         let chooseQuantity = document.createElement('p');
         chooseQuantity.textContent = numbers[i];
@@ -42,8 +44,8 @@ promise.then((response) => {
         chooseQuantity.setAttribute('class', 'quantityoption')                         
     }
 
+    // set the displayed quantity of the dropdown equal to choose the quantity equal to the selected quantity in the dropdown:
     let quantityOption = document.querySelectorAll('.quantityoption');
-
     for (i = 0; i < quantityOption.length; i++) {
         quantityOption[i].addEventListener('click', ($event) => {
         teddy.quantity = Number($event.target.textContent);
@@ -52,6 +54,7 @@ promise.then((response) => {
         })
     } 
 
+    // for each color in the array colors in the response object create a 'p' element and append them to the dropdown to choose the color:
     for (i = 0; i < response.colors.length; i++) { 
         let colorsOption = document.createElement('p');
         colorsOption.textContent = response.colors[i];
@@ -60,8 +63,8 @@ promise.then((response) => {
         colorsOption.setAttribute('class', 'choosecolors')                 
     }
 
-    let chooseColors = document.querySelectorAll('.choosecolors'); 
-        
+    // set the displayed color of the dropdown to choose the color equal to the selected color in the dropdown:
+    let chooseColors = document.querySelectorAll('.choosecolors');        
     for (i = 0; i < chooseColors.length; i++) {
         let colorDrop = document.getElementById('colorbutton');
         colorDrop.textContent = response.colors[0];
@@ -71,6 +74,7 @@ promise.then((response) => {
         })
     } 
 
+    // create a figurecaption containing the button add the item to the cart:
     let figCaption = document.getElementById('figcaption'); 
     let linebreak = document.createElement("br");
     document.getElementById('figcaption').appendChild(linebreak);
@@ -84,6 +88,7 @@ promise.then((response) => {
         location.reload();   
     });
 
+      // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
     if (localStorage.getItem("totalitemincart") === null) {
         let displayTotalItemInCart = document.getElementById('displaytotalitem');
         displayTotalItemInCart.textContent = 0;
@@ -91,6 +96,7 @@ promise.then((response) => {
         document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
     }
 
+    // set a key in local showing the total number of item in the cart:
     const totalItemInCart = () => {
         let totalItem = localStorage.getItem('totalitemincart');
         totalItem = parseInt(totalItem);
@@ -101,12 +107,16 @@ promise.then((response) => {
         }
     }
 
+    // set a key in local storage equal to the Id of the teddy, the value of the key in a object containing the different colors of teddys added to the cart:
     const addItemToCart = () => {
         itemInCart = localStorage.getItem(response._id);
         itemInCart = JSON.parse(itemInCart);
         if (itemInCart !== null ) {
             if (itemInCart[teddy.color] == undefined) {
+
+                // second teddy with same Id but different color was being added twice showing the quantity added times 2, so added the following line to fix that:
                 teddy.quantity /= 2;
+
                 itemInCart = {
                     ...itemInCart,
                     [teddy.color] : teddy
@@ -124,6 +134,7 @@ promise.then((response) => {
         localStorage.setItem(response._id, JSON.stringify(itemInCart));  
     }
 
+    // set a key in local storage showing the total cost of the item in the cart:
     const totalCost = () => {
         let cartCost = localStorage.getItem('totalcost');
         if (cartCost != null) {
@@ -133,6 +144,6 @@ promise.then((response) => {
             localStorage.setItem('totalcost', teddy.price * teddy.quantity);
         }
     }
-}).catch((error) =>{
+}).catch((error) => {
     alert(error);
 })

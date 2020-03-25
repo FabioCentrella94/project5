@@ -1,3 +1,4 @@
+// show the response from the post request stored in the session storage and the totalcost of the cart:
 const displayOrderConfirmation = ('DOMContentLoaded', () => {
     let orderConfirmation = document.getElementById('orderconfirmation');
     let thankYouText = document.createElement('h1');
@@ -22,7 +23,7 @@ const displayOrderConfirmation = ('DOMContentLoaded', () => {
     orderConfirmation.appendChild(productsListText);
     for (i = 0; i < productsList.length; i++) {      
         let productsId = document.createElement('p');
-        productsId.textContent = productsList[i]._id;
+        productsId.textContent = productsList[i].name;
         orderConfirmation.appendChild(productsId);
     };
     let addressText = document.createElement('h2');

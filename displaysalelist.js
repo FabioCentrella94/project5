@@ -1,3 +1,4 @@
+// fetch data from the server and then for every product create figure containing image and name:
 const promise = new Promise((resolve, reject) => {
   let apiRequest = new XMLHttpRequest();
   apiRequest.open('GET', 'http://localhost:3000/api/teddies');
@@ -12,7 +13,6 @@ const promise = new Promise((resolve, reject) => {
     }
   }
 })
-
 promise.then((response) => {
   for (i = 0; i < response.length; i++) { 
     let figure = document.createElement('figure');
@@ -32,7 +32,8 @@ promise.then((response) => {
     let viewItemButton = document.createElement('button');     
     viewItemButton.textContent = 'View Item';
     link.appendChild(viewItemButton);
-  }  
+  } 
+  // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
   if (localStorage.getItem("totalitemincart") === null) {
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
     displayTotalItemInCart.textContent = 0;

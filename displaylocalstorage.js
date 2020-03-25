@@ -1,3 +1,4 @@
+// if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart:
 if (localStorage.getItem("totalitemincart") === null) {
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
     displayTotalItemInCart.textContent = 0;
@@ -5,7 +6,7 @@ if (localStorage.getItem("totalitemincart") === null) {
     document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
 }
 
-
+// loop through the key in local storage and if their value is an object push it in the array localStorageValues:
 let localStorageValues = [];
 for (let i in localStorage) {
     if (localStorage.hasOwnProperty(i)) {
@@ -13,6 +14,7 @@ for (let i in localStorage) {
     } 
 }
 
+// loop through the object in the array localStorageValues and push the properties (objects in this case) of each object in the array named Cart:
 let cart = [];
 localStorageValues.forEach(function(obj) {   
     Object.keys(obj).forEach(key => {
@@ -20,12 +22,15 @@ localStorageValues.forEach(function(obj) {
     })   
 })
 
+
+// loop through each object in the Cart array and for each object create a new array inside the array arraysOfId containing the Id key of the object times the quantity key of the object and the concatenate all the arrays of Id contained in arraysOfId:
 let arraysofId = [];
 for (i = 0; i < cart.length; i++) {
     arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
 }
 let products = [].concat.apply([], arraysofId);
 
+// for each object in the array Cart create a figurecaption containing the image of the object, the price, the quantity, the plus and minus quantity buttons, the total cost and the remove item button:
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
     let image = document.createElement('img');
@@ -72,6 +77,7 @@ for (i = 0; i < cart.length; i++) {
     displayCart.appendChild(itemContainer);
 }
 
+// code for the functionality of the minus button:
 let reduceQuantity = document.querySelectorAll('.minusbutton');
 for (i = 0; i < reduceQuantity.length; i++) {
     reduceQuantity[i].addEventListener('click', ($event) => {
@@ -96,6 +102,7 @@ for (i = 0; i < reduceQuantity.length; i++) {
     })
 }
 
+// code for the functionality of the plus button:
 let increaseQuantity = document.querySelectorAll('.plusbutton');
 for (i = 0; i < increaseQuantity.length; i++) {
     increaseQuantity[i].addEventListener('click', ($event) => {
@@ -113,7 +120,7 @@ for (i = 0; i < increaseQuantity.length; i++) {
     })
 }
 
-
+// code for the functionality of the remove item button:
 let removeItem = document.querySelectorAll('.removeitem');
 for (i = 0; i < removeItem.length; i++) {
     removeItem[i].addEventListener('click', ($event) => {
@@ -142,11 +149,10 @@ let contact = {
     email: ''
 }
 
+// check if the array products is empty, if so the input form is disabled otherwise is enabled and check if the value of each input text is greater than 0 and follow is respective pattern, if so the border of the input becomes green, otherwise red:
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
 if (products.length >= 1) {
-    checkoutButton.removeAttribute('disabled');
-    checkoutButton.style.cursor = 'auto';
     for (i = 0; i < checkoutInputField.length; i++) {
         checkoutInputField[i].removeAttribute('disabled');
         checkoutInputField[i].style.backgroundColor = 'white';
@@ -161,12 +167,26 @@ if (products.length >= 1) {
     }
 }
 
+// check if the value of each input text if is greater than 0 and match its respective pattern, if so the submit order button is enabled, otherwise not:
+for (i = 0; i < checkoutInputField.length; i++) {
+    checkoutInputField[i].addEventListener('input', () => {
+        if (checkoutInputField[0].value.length >= 1 && checkoutInputField[0].value.match(checkoutInputField[0].pattern) && checkoutInputField[1].value.length >= 1 && checkoutInputField[1].value.match(checkoutInputField[1].pattern) && checkoutInputField[2].value.length >= 1 && checkoutInputField[2].value.match(checkoutInputField[2].pattern) && checkoutInputField[3].value.length >= 1 && checkoutInputField[3].value.match(checkoutInputField[3].pattern) && checkoutInputField[4].value.length >= 1 && checkoutInputField[4].value.match(checkoutInputField[4].pattern)) {
+            checkoutButton.removeAttribute('disabled');
+            checkoutButton.style.cursor = 'auto';
+        } else {
+            checkoutButton.setAttribute('disabled', 'true');
+            checkoutButton.style.cursor = 'not-allowed';
+        }
+    })
+}
+
 checkoutButton.addEventListener('click', ($event) => {
     $event.preventDefault();
     setContactValues();
     submitOrder();
 })
 
+// set the value of the properties of the contact object equal to the value of the input text form:
 const setContactValues = () => {
     contact.firstName = checkoutInputField[0].value;
     contact.lastName = checkoutInputField[1].value;
@@ -175,6 +195,7 @@ const setContactValues = () => {
     contact.email = checkoutInputField[4].value;
 }
 
+// post request sending the object contact and the array products to the server, storing the response in the session storage, convertin the totalcost key from localstorage to sessionstorage and clearing the local storage:
 const submitOrder = () => {
     const promise = new Promise((resolve, reject) => {
         let postRequest = new XMLHttpRequest();
@@ -197,10 +218,13 @@ const submitOrder = () => {
         sessionStorage.setItem('ordertotalprice', localStorage.getItem('totalcost'));
         localStorage.clear();
         sessionStorage.setItem('orderdetail', JSON.stringify(response));
+
+        // when pressed back button from the orderconfirmation page to the cart page the input text field still contained previous informations, so fixed with the follow lines:
         for (i = 0; i < checkoutInputField.length; i++) {
             checkoutInputField[i].value = '';
         }
-        location.href = 'orderconfirmation.html';   
+
+        location.href = 'orderconfirmation.html';
     }).catch((error) => {
         alert(error);
     })
