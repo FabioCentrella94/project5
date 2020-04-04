@@ -161,6 +161,7 @@ let contact = {
 }
 
 // for each input element create a p element:
+let formInputField = document.querySelectorAll('.form-group');
 for (i = 0; i < formInputField.length; i++) {
     let alertText = document.createElement('p');
     formInputField[i].appendChild(alertText);
@@ -170,7 +171,6 @@ for (i = 0; i < formInputField.length; i++) {
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
 let checkoutForm = document.getElementById('inputform');
-let formInputField = document.querySelectorAll('.form-group');
 if (products.length >= 1) {
     checkoutForm.removeAttribute('hidden');
     for (i = 0; i < checkoutInputField.length; i++) {
