@@ -160,15 +160,17 @@ let contact = {
     email: ''
 }
 
-// check if the array products is empty, if so the input form is hidden otherwise not, and check if the value of each input text is greater than 0 and match is respective pattern, if so the border of the input becomes green, otherwise red:
+// for each input element create a p element:
+for (i = 0; i < formInputField.length; i++) {
+    let alertText = document.createElement('p');
+    formInputField[i].appendChild(alertText);
+    }
+
+// check if the array products is empty, if so the input form is hidden otherwise not, and check if the value of each input text is greater than 0 and match is respective pattern:
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
 let checkoutForm = document.getElementById('inputform');
 let formInputField = document.querySelectorAll('.form-group');
-for (i = 0; i < formInputField.length; i++) {
-let alertText = document.createElement('p');
-formInputField[i].appendChild(alertText);
-}
 if (products.length >= 1) {
     checkoutForm.removeAttribute('hidden');
     for (i = 0; i < checkoutInputField.length; i++) {
@@ -187,8 +189,6 @@ if (products.length >= 1) {
     let formContainer = document.getElementById('formcontainer');
     formContainer.appendChild(text);
 }
-
-// function to check if the value of the input textarea is greater than one and match the regex pattern, if so set the border to green, otherwise red:
 const inputValidation = ($event) => {
     if ($event.target.value.length < 1) {
         $event.target.style.border = '2px solid red';
