@@ -1,10 +1,11 @@
+let displayCart = document.getElementById('cart');
 // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart:
 if (localStorage.getItem("totalitemincart") === null) {
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
-    displayTotalItemInCart.textContent = 0;
-} else {
-    document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
-}
+    displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+  } else {
+    document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+  }
 
 // loop through the key in local storage and if their value is an object push it in the array localStorageValues:
 let localStorageValues = [];
@@ -33,6 +34,7 @@ let products = [].concat.apply([], arraysofId);
 // for each object in the array Cart create a figurecaption containing the image of the object, the price, the quantity, the plus and minus quantity buttons, the total cost and the remove item button:
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
+    itemContainer.setAttribute('class', 'col-12')
     let image = document.createElement('img');
     image.src = cart[i].image;
     itemContainer.appendChild(image);
@@ -53,7 +55,7 @@ for (i = 0; i < cart.length; i++) {
     minusButton.textContent = '-';
     minusButton.value = cart[i].color;
     minusButton.name = cart[i].id;
-    minusButton.setAttribute('class', 'minusbutton');
+    minusButton.setAttribute('class', 'minusbutton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(minusButton);
     let quantity = document.createElement('p');
     quantity.textContent = cart[i].quantity;
@@ -62,13 +64,13 @@ for (i = 0; i < cart.length; i++) {
     plusButton.textContent = '+';
     plusButton.value = cart[i].color;
     plusButton.name = cart[i].id;
-    plusButton.setAttribute('class', 'plusbutton');
+    plusButton.setAttribute('class', 'plusbutton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(plusButton);
     let totalPrice = document.createElement('p');
     totalPrice.textContent = '$' + ((cart[i].price * cart[i].quantity) / 100).toFixed(2);
     figcaption.appendChild(totalPrice);
     let removeItemButton = document.createElement('button');
-    removeItemButton.setAttribute('class', 'removeitem');
+    removeItemButton.setAttribute('class', 'removeitem bg-secondary text-light');
     removeItemButton.textContent = 'Remove Item';
     removeItemButton.value = cart[i].color;
     removeItemButton.name = cart[i].id;
@@ -77,7 +79,7 @@ for (i = 0; i < cart.length; i++) {
     displayCart.appendChild(itemContainer);
 }
 
-// code for the functionality of the minus button:
+// code for the functionality of the minus button, reduce quantity of one target item:
 let reduceQuantity = document.querySelectorAll('.minusbutton');
 for (i = 0; i < reduceQuantity.length; i++) {
     reduceQuantity[i].addEventListener('click', ($event) => {
@@ -98,11 +100,17 @@ for (i = 0; i < reduceQuantity.length; i++) {
         if (localStorage.getItem($event.target.name) == '{}') {
             localStorage.removeItem($event.target.name)
         }
-        location.reload();
+        $event.target.nextSibling.textContent = Number($event.target.nextSibling.textContent) - 1; 
+        if ($event.target.nextSibling.textContent < 1) {
+            displayCart.removeChild($event.target.parentElement.parentElement.parentElement);
+        }
+        if (displayCart.childNodes.length < 1) {
+            location.reload();
+        }
     })
 }
 
-// code for the functionality of the plus button:
+// code for the functionality of the plus button, increase quantity of one target item:
 let increaseQuantity = document.querySelectorAll('.plusbutton');
 for (i = 0; i < increaseQuantity.length; i++) {
     increaseQuantity[i].addEventListener('click', ($event) => {
@@ -116,7 +124,7 @@ for (i = 0; i < increaseQuantity.length; i++) {
         let totalCost = localStorage.getItem('totalcost');
         totalCost = parseInt(totalCost);
         localStorage.setItem('totalcost', totalCost + itemInCart[$event.target.value].price);
-        location.reload();
+        $event.target.previousSibling.textContent = Number($event.target.previousSibling.textContent) + 1;  
     })
 }
 
@@ -135,9 +143,12 @@ for (i = 0; i < removeItem.length; i++) {
         delete itemInCart[$event.target.value];      
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
         if (localStorage.getItem($event.target.name) == '{}') {
-            localStorage.removeItem($event.target.name)
+            localStorage.removeItem($event.target.name);
         }
-        location.reload();
+        displayCart.removeChild($event.target.previousSibling.parentElement.parentElement);
+        if (displayCart.childNodes.length < 1) {
+            location.reload();
+        }
     })
 }
 
@@ -149,21 +160,48 @@ let contact = {
     email: ''
 }
 
-// check if the array products is empty, if so the input form is disabled otherwise is enabled and check if the value of each input text is greater than 0 and follow is respective pattern, if so the border of the input becomes green, otherwise red:
+// check if the array products is empty, if so the input form is hidden otherwise not, and check if the value of each input text is greater than 0 and match is respective pattern, if so the border of the input becomes green, otherwise red:
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
+let checkoutForm = document.getElementById('inputform');
+let formInputField = document.querySelectorAll('.form-group');
+for (i = 0; i < formInputField.length; i++) {
+let alertText = document.createElement('p');
+formInputField[i].appendChild(alertText);
+}
 if (products.length >= 1) {
+    checkoutForm.removeAttribute('hidden');
     for (i = 0; i < checkoutInputField.length; i++) {
-        checkoutInputField[i].removeAttribute('disabled');
-        checkoutInputField[i].style.backgroundColor = 'white';
-        checkoutInputField[i].style.cursor = 'auto';
-        checkoutInputField[i].addEventListener('blur', ($event) => {
-            if ($event.target.value < 1 || !$event.target.value.match($event.target.pattern) ) {
-                $event.target.style.border = '2px solid red';         
-            } else {
-                $event.target.style.border = '2px solid greenyellow';
-            }
+        checkoutInputField[i].addEventListener('input', ($event) => {
+            inputValidation($event);
         })
+        checkoutInputField[i].addEventListener('blur', ($event) => {
+            inputValidation($event);
+        })
+    }
+} else {
+    checkoutForm.setAttribute('hidden', 'true');
+    let text = document.createElement('p');
+    text.setAttribute('class', 'font-weight-bold mt-5');
+    text.textContent = 'Your Cart Is Empty';
+    let formContainer = document.getElementById('formcontainer');
+    formContainer.appendChild(text);
+}
+
+// function to check if the value of the input textarea is greater than one and match the regex pattern, if so set the border to green, otherwise red:
+const inputValidation = ($event) => {
+    if ($event.target.value.length < 1) {
+        $event.target.style.border = '2px solid red';
+        $event.target.nextElementSibling.style.color = 'red';
+        $event.target.nextElementSibling.textContent = 'Field Required';  
+    } else if ($event.target.value.length >= 1 && !$event.target.value.match($event.target.pattern)) {
+        $event.target.style.border = '2px solid red';
+        $event.target.nextElementSibling.style.color = 'red';
+        $event.target.nextElementSibling.textContent = 'Format Not Valid';
+    } else {
+        $event.target.style.border = '2px solid greenyellow';
+        $event.target.nextElementSibling.style.color = 'green';
+        $event.target.nextElementSibling.textContent = 'Valid' + ' ' + $event.target.name; 
     }
 }
 
@@ -171,11 +209,9 @@ if (products.length >= 1) {
 for (i = 0; i < checkoutInputField.length; i++) {
     checkoutInputField[i].addEventListener('input', () => {
         if (checkoutInputField[0].value.length >= 1 && checkoutInputField[0].value.match(checkoutInputField[0].pattern) && checkoutInputField[1].value.length >= 1 && checkoutInputField[1].value.match(checkoutInputField[1].pattern) && checkoutInputField[2].value.length >= 1 && checkoutInputField[2].value.match(checkoutInputField[2].pattern) && checkoutInputField[3].value.length >= 1 && checkoutInputField[3].value.match(checkoutInputField[3].pattern) && checkoutInputField[4].value.length >= 1 && checkoutInputField[4].value.match(checkoutInputField[4].pattern)) {
-            checkoutButton.removeAttribute('disabled');
-            checkoutButton.style.cursor = 'auto';
+            checkoutButton.removeAttribute('hidden');
         } else {
-            checkoutButton.setAttribute('disabled', 'true');
-            checkoutButton.style.cursor = 'not-allowed';
+            checkoutButton.setAttribute('hidden', 'true');
         }
     })
 }

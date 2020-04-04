@@ -23,8 +23,14 @@ promise.then((response) => {
     description.textContent = response.description;
     let price = document.getElementById('price');
     price.textContent = '$' + (response.price / 100).toFixed(2);
-        
-    let numbers = [1, 2, 3];
+
+    // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
+    if (localStorage.getItem("totalitemincart") === null) {
+        let displayTotalItemInCart = document.getElementById('displaytotalitem');
+        displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+    } else {
+        document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+    }
 
     // set an object with different properties equal to the response got from the server:
     let teddy = {
@@ -35,30 +41,37 @@ promise.then((response) => {
         price: response.price
     }
 
-    // for each number in the array number create a 'p' element and append them to the dropdown to choose the quantity:
-    for (i = 0; i < numbers.length; i++) { 
-        let chooseQuantity = document.createElement('p');
-        chooseQuantity.textContent = numbers[i];
-        let dropdown = document.getElementById('quantity');
-        dropdown.appendChild(chooseQuantity);
-        chooseQuantity.setAttribute('class', 'quantityoption')                         
-    }
+    // decrease quantity button:
+    let quantityToAdd = document.getElementById('quantitytoadd');
+    let minusButton = document.getElementById('minusbutton');
+    minusButton.addEventListener('click', () => {
+        if (teddy.quantity >= 2 && quantityToAdd.textContent >= 2) {
+            teddy.quantity = teddy.quantity - 1;
+            quantityToAdd.textContent = Number(quantityToAdd.textContent) - 1;
+        } else {
+            teddy.quantity = teddy.quantity;
+            quantityToAdd = quantityToAdd;
+        }
+        console.log(teddy.quantity);
+    });
 
-    // set the displayed quantity of the dropdown equal to choose the quantity equal to the selected quantity in the dropdown:
-    let quantityOption = document.querySelectorAll('.quantityoption');
-    for (i = 0; i < quantityOption.length; i++) {
-        quantityOption[i].addEventListener('click', ($event) => {
-        teddy.quantity = Number($event.target.textContent);
-            let quantityDropdown = document.getElementById('quantitybutton');
-            quantityDropdown.textContent = $event.target.textContent;                  
-        })
-    } 
+    // increase quantity button:
+    let plusButton = document.getElementById('plusbutton');
+    plusButton.addEventListener('click', () => {
+        teddy.quantity = teddy.quantity + 1;
+        quantityToAdd.textContent = Number(quantityToAdd.textContent) + 1;
+    });
+
+    // set the text content for the dropdown button:
+    let colorDrop = document.getElementById('colorbutton');
+    colorDrop.textContent = response.colors[0];
 
     // for each color in the array colors in the response object create a 'p' element and append them to the dropdown to choose the color:
     for (i = 0; i < response.colors.length; i++) { 
         let colorsOption = document.createElement('p');
         colorsOption.textContent = response.colors[i];
-        let dropdown = document.getElementById('color');
+        colorsOption.setAttribute('class', 'dropdown-item')
+        let dropdown = document.getElementById('colors');
         dropdown.appendChild(colorsOption); 
         colorsOption.setAttribute('class', 'choosecolors')                 
     }
@@ -66,8 +79,6 @@ promise.then((response) => {
     // set the displayed color of the dropdown to choose the color equal to the selected color in the dropdown:
     let chooseColors = document.querySelectorAll('.choosecolors');        
     for (i = 0; i < chooseColors.length; i++) {
-        let colorDrop = document.getElementById('colorbutton');
-        colorDrop.textContent = response.colors[0];
         chooseColors[i].addEventListener('click', ($event) => {
             teddy.color = $event.target.textContent;
             colorDrop.textContent = $event.target.textContent;
@@ -75,26 +86,18 @@ promise.then((response) => {
     } 
 
     // create a figurecaption containing the button add the item to the cart:
-    let figCaption = document.getElementById('figcaption'); 
-    let linebreak = document.createElement("br");
-    document.getElementById('figcaption').appendChild(linebreak);
-    let addToCart = document.createElement('button');
-    document.getElementById('figcaption').appendChild(addToCart);
-    addToCart.textContent = 'Add To Cart';
-    addToCart.addEventListener('click', () => {
+    let teddyDetails = document.getElementById('teddydetails'); 
+    let addToCartButton = document.createElement('button');
+    addToCartButton.type = 'button';
+    addToCartButton.setAttribute('class', 'btn btn-secondary text-light mt-5 mb-5');
+    teddyDetails.appendChild(addToCartButton);
+    addToCartButton.textContent = 'Add To Cart';
+    addToCartButton.addEventListener('click', () => {
         totalItemInCart();
         addItemToCart();
         totalCost();
         location.reload();   
     });
-
-      // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
-    if (localStorage.getItem("totalitemincart") === null) {
-        let displayTotalItemInCart = document.getElementById('displaytotalitem');
-        displayTotalItemInCart.textContent = 0;
-    } else {
-        document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
-    }
 
     // set a key in local showing the total number of item in the cart:
     const totalItemInCart = () => {

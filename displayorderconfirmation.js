@@ -2,6 +2,7 @@
 const displayOrderConfirmation = ('DOMContentLoaded', () => {
     let orderConfirmation = document.getElementById('orderconfirmation');
     let thankYouText = document.createElement('h1');
+    thankYouText.setAttribute('class', 'mb-5')
     thankYouText.textContent = 'Thanks for your order!';
     orderConfirmation.appendChild(thankYouText);
     let productsList = JSON.parse(sessionStorage.getItem('orderdetail')).products;
@@ -21,11 +22,25 @@ const displayOrderConfirmation = ('DOMContentLoaded', () => {
     let productsListText = document.createElement('h2');
     productsListText.textContent = 'Products List:';
     orderConfirmation.appendChild(productsListText);
-    for (i = 0; i < productsList.length; i++) {      
-        let productsId = document.createElement('p');
-        productsId.textContent = productsList[i].name;
-        orderConfirmation.appendChild(productsId);
-    };
+
+    // split the name of every teddy with a comma and add the dot for the last teddy name:
+    let productsNameTemporary = [];
+    for (i = 0; i < productsList.length; i++) {
+        productsNameTemporary.push(productsList[i].name);
+    }
+    if (productsNameTemporary.length >= 2) {
+        let productsName = productsNameTemporary.slice(0, -1).join(', ') + ', ' + productsNameTemporary.slice(-1) + '.';
+        console.log(productsName);
+        let nameToDisplay = document.createElement('p');
+        nameToDisplay.innerHTML = productsName;
+        orderConfirmation.appendChild(nameToDisplay);    
+    } else {
+        productsName = productsNameTemporary.slice(0) + '.';
+        let nameToDisplay = document.createElement('p');
+        nameToDisplay.innerHTML = productsName;
+        orderConfirmation.appendChild(nameToDisplay); 
+    }
+
     let addressText = document.createElement('h2');
     addressText.textContent = 'Contact Information:';
     orderConfirmation.appendChild(addressText);
@@ -45,7 +60,7 @@ const displayOrderConfirmation = ('DOMContentLoaded', () => {
     email.textContent = contactInformation.email;
     orderConfirmation.appendChild(email);
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
-    displayTotalItemInCart.textContent = 0;
+    displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
 });
 
 displayOrderConfirmation();

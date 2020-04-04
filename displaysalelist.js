@@ -1,4 +1,4 @@
-// fetch data from the server and then for every product create figure containing image and name:
+// fetch data from the server and then for every product create figure containing image and name and append it to the carousel slide:
 const promise = new Promise((resolve, reject) => {
   let apiRequest = new XMLHttpRequest();
   apiRequest.open('GET', 'http://localhost:3000/api/teddies');
@@ -15,30 +15,32 @@ const promise = new Promise((resolve, reject) => {
 })
 promise.then((response) => {
   for (i = 0; i < response.length; i++) { 
-    let figure = document.createElement('figure');
-    let salelist = document.getElementById('salelist');
-    salelist.appendChild(figure);  
-    let nameList = document.createElement('h2');
-    nameList.textContent = response[i].name;
-    figure.appendChild(nameList);
-    let imageList = document.createElement('img');
-    imageList.src = response[i].imageUrl;
-    figure.appendChild(imageList);
-    let figureCaption = document.createElement('figcaption');
-    figure.appendChild(figureCaption);
-    let link = document.createElement('a');
-    link.href = 'singleitem.html' + '?' + response[i]._id;
-    figureCaption.appendChild(link);
-    let viewItemButton = document.createElement('button');     
-    viewItemButton.textContent = 'View Item';
-    link.appendChild(viewItemButton);
+    let carouselItem = document.createElement('div');
+    if (i === 0) {
+      carouselItem.className = 'carousel-item active';
+    } else {
+        carouselItem.className = 'carousel-item';
+    }
+    let carouselSlide = document.getElementById('carouselslide');
+    carouselSlide.appendChild(carouselItem);
+    let carouselItemName = document.createElement('h1');
+    carouselItemName.textContent = response[i].name;
+    carouselItemName.className = 'mb-3 my-3 my-md-5';
+    carouselItem.appendChild(carouselItemName);
+    let carouselItemLink = document.createElement('a');
+    carouselItemLink.href = 'singleitem.html' + '?' + response[i]._id;
+    carouselItem.appendChild(carouselItemLink);
+    let carouselItemImage = document.createElement('img');
+    carouselItemImage.className = 'border border-secondary';
+    carouselItemImage.src = response[i].imageUrl;
+    carouselItemLink.appendChild(carouselItemImage);   
   } 
   // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
   if (localStorage.getItem("totalitemincart") === null) {
     let displayTotalItemInCart = document.getElementById('displaytotalitem');
-    displayTotalItemInCart.textContent = 0;
+    displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
   } else {
-    document.getElementById('displaytotalitem').textContent = localStorage.getItem('totalitemincart');
+    document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
   }
 }).catch((error) => {
     alert(error);
