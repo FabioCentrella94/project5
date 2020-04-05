@@ -23,7 +23,7 @@ promise.then((response) => {
     }
     let carouselSlide = document.getElementById('carouselslide');
     carouselSlide.appendChild(carouselItem);
-    let carouselItemName = document.createElement('h1');
+    let carouselItemName = document.createElement('h2');
     carouselItemName.textContent = response[i].name;
     carouselItemName.className = 'mb-3 my-3 my-md-5';
     carouselItem.appendChild(carouselItemName);
