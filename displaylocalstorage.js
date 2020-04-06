@@ -68,6 +68,7 @@ for (i = 0; i < cart.length; i++) {
     plusButton.name = cart[i].id;
     plusButton.setAttribute('class', 'plusbutton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(plusButton);
+    let totalPrice = document.createElement('p');
     totalPrice.textContent = '$' + ((cart[i].price * cart[i].quantity) / 100).toFixed(2);
     figcaption.appendChild(totalPrice);
     let removeItemButton = document.createElement('button');
@@ -95,7 +96,7 @@ for (i = 0; i < reduceQuantity.length; i++) {
         localStorage.setItem('totalcost', totalCost - itemInCart[$event.target.value].price);
         if (itemInCart[$event.target.value].quantity > 1) {
             itemInCart[$event.target.value].quantity -= 1;
-            totalPrice.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
+            $event.target.parentElement.nextElementSibling.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
         } else {
             delete itemInCart[$event.target.value];
         }
@@ -124,7 +125,7 @@ for (i = 0; i < increaseQuantity.length; i++) {
         itemInCart = JSON.parse(itemInCart);
         document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
         itemInCart[$event.target.value].quantity += 1;
-        totalPrice.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
+        $event.target.parentElement.nextElementSibling.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
         let totalCost = localStorage.getItem('totalcost');
         totalCost = parseInt(totalCost);
