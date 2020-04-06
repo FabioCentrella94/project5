@@ -23,23 +23,22 @@ const displayOrderConfirmation = ('DOMContentLoaded', () => {
     productsListText.textContent = 'Products List:';
     orderConfirmation.appendChild(productsListText);
 
-    // split the name of every teddy with a comma and add the dot for the last teddy name:
+    // push the name of each teddy in the array productsNameTemporary:
     let productsNameTemporary = [];
     for (i = 0; i < productsList.length; i++) {
         productsNameTemporary.push(productsList[i].name);
     }
-    if (productsNameTemporary.length >= 2) {
-        let productsName = productsNameTemporary.slice(0, -1).join(', ') + ', ' + productsNameTemporary.slice(-1) + '.';
-        console.log(productsName);
-        let nameToDisplay = document.createElement('p');
-        nameToDisplay.innerHTML = productsName;
-        orderConfirmation.appendChild(nameToDisplay);    
-    } else {
-        productsName = productsNameTemporary.slice(0) + '.';
-        let nameToDisplay = document.createElement('p');
-        nameToDisplay.innerHTML = productsName;
-        orderConfirmation.appendChild(nameToDisplay); 
-    }
+
+    // set the properties of the object 'productsNameObject' where the key is the name of the teddy and the value is the number of how many times the teddy name is repeated in the array 'productsNameTemporary';
+    var productsNameObject = {};
+    productsNameTemporary.forEach(function(i) {productsNameObject[i] = (productsNameObject[i]||0) + 1;});
+
+    // split the name and quantity of every teddy with a comma and add the dot for the last teddy:
+    let teddyAndQuantity = document.createElement('p');
+    teddyAndQuantity.textContent = Object.keys(productsNameObject).map(function(key) {
+    return key +  " " +  'x' + ' ' + productsNameObject[key]
+    }).join(', ') + '.';
+    orderConfirmation.appendChild(teddyAndQuantity);
 
     let addressText = document.createElement('h2');
     addressText.textContent = 'Contact Information:';

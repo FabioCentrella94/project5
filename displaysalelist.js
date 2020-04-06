@@ -1,7 +1,7 @@
 // fetch data from the server and then for every product create figure containing image and name and append it to the carousel slide:
 const promise = new Promise((resolve, reject) => {
   let apiRequest = new XMLHttpRequest();
-  apiRequest.open('GET', 'http://localhost:3000/api/teddies');
+  apiRequest.open('GET', 'http://localhost:3000/api/teddies/');
   apiRequest.send();
   apiRequest.onreadystatechange = () => {
     if (apiRequest.readyState === 4) {
@@ -43,7 +43,9 @@ promise.then((response) => {
     document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
   }
 }).catch((error) => {
-    alert(error);
+  let salelist = document.getElementById('salelist');
+  salelist.className = 'm-auto overflow-auto p-5 text-center';
+  salelist.innerHTML = error;
 })
 
 

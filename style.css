@@ -13,7 +13,7 @@ footer {
 }
 
 h2 {
-    margin: 3% 0;
+    margin: 5% 0;
 }
 
 #salelist {
@@ -68,6 +68,9 @@ div span {
     form {
         width: 100% !important;
     }
+    #footerorder {
+        top: 100% !important;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -98,6 +101,9 @@ div span {
     }
     form {
         width: 75%;
+    }
+    #footerorder {
+        top: 95%;
     }
 }
 

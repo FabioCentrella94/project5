@@ -23,6 +23,7 @@ localStorageValues.forEach(function(obj) {
     })   
 })
 
+console.log(cart)
 
 // loop through each object in the Cart array and for each object create a new array inside the array arraysOfId containing the Id key of the object times the quantity key of the object and the concatenate all the arrays of Id contained in arraysOfId:
 let arraysofId = [];
@@ -32,6 +33,7 @@ for (i = 0; i < cart.length; i++) {
 let products = [].concat.apply([], arraysofId);
 
 // for each object in the array Cart create a figurecaption containing the image of the object, the price, the quantity, the plus and minus quantity buttons, the total cost and the remove item button:
+let totalPrice = document.createElement('p');
 for (i = 0; i < cart.length; i++) {
     let itemContainer = document.createElement('figure');
     itemContainer.setAttribute('class', 'col-12')
@@ -66,7 +68,6 @@ for (i = 0; i < cart.length; i++) {
     plusButton.name = cart[i].id;
     plusButton.setAttribute('class', 'plusbutton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(plusButton);
-    let totalPrice = document.createElement('p');
     totalPrice.textContent = '$' + ((cart[i].price * cart[i].quantity) / 100).toFixed(2);
     figcaption.appendChild(totalPrice);
     let removeItemButton = document.createElement('button');
@@ -88,11 +89,13 @@ for (i = 0; i < reduceQuantity.length; i++) {
         localStorage.setItem('totalitemincart', totalItem - 1);
         itemInCart = localStorage.getItem($event.target.name);
         itemInCart = JSON.parse(itemInCart);
+        document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
         let totalCost = localStorage.getItem('totalcost');
         totalCost = parseInt(totalCost);
         localStorage.setItem('totalcost', totalCost - itemInCart[$event.target.value].price);
         if (itemInCart[$event.target.value].quantity > 1) {
-            itemInCart[$event.target.value].quantity -= 1; 
+            itemInCart[$event.target.value].quantity -= 1;
+            totalPrice.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
         } else {
             delete itemInCart[$event.target.value];
         }
@@ -119,12 +122,14 @@ for (i = 0; i < increaseQuantity.length; i++) {
         localStorage.setItem('totalitemincart', totalItem + 1);
         itemInCart = localStorage.getItem($event.target.name);
         itemInCart = JSON.parse(itemInCart);
+        document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
         itemInCart[$event.target.value].quantity += 1;
+        totalPrice.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
         let totalCost = localStorage.getItem('totalcost');
         totalCost = parseInt(totalCost);
         localStorage.setItem('totalcost', totalCost + itemInCart[$event.target.value].price);
-        $event.target.previousSibling.textContent = Number($event.target.previousSibling.textContent) + 1;  
+        $event.target.previousSibling.textContent = Number($event.target.previousSibling.textContent) + 1;
     })
 }
 
@@ -142,6 +147,7 @@ for (i = 0; i < removeItem.length; i++) {
         localStorage.setItem('totalitemincart', totalItem - itemInCart[$event.target.value].quantity);
         delete itemInCart[$event.target.value];      
         localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
+        document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
         if (localStorage.getItem($event.target.name) == '{}') {
             localStorage.removeItem($event.target.name);
         }
@@ -171,6 +177,7 @@ for (i = 0; i < formInputField.length; i++) {
 let checkoutButton = document.getElementById('submitorder');
 let checkoutInputField = document.querySelectorAll('input');
 let checkoutForm = document.getElementById('inputform');
+let formContainer = document.getElementById('formcontainer');
 if (products.length >= 1) {
     checkoutForm.removeAttribute('hidden');
     for (i = 0; i < checkoutInputField.length; i++) {
@@ -186,7 +193,6 @@ if (products.length >= 1) {
     let text = document.createElement('p');
     text.setAttribute('class', 'font-weight-bold mt-5');
     text.textContent = 'Your Cart Is Empty';
-    let formContainer = document.getElementById('formcontainer');
     formContainer.appendChild(text);
 }
 const inputValidation = ($event) => {
@@ -231,9 +237,27 @@ const setContactValues = () => {
     contact.email = checkoutInputField[4].value;
 }
 
-// post request sending the object contact and the array products to the server, storing the response in the session storage, convertin the totalcost key from localstorage to sessionstorage and clearing the local storage:
+
+// submit order function that refresh the array 'products' containing the id of all the teddies before to be sent to the server:
 const submitOrder = () => {
     const promise = new Promise((resolve, reject) => {
+        let localStorageValues = [];
+        for (let i in localStorage) {
+            if (localStorage.hasOwnProperty(i)) {
+                localStorageValues.push(JSON.parse(localStorage[i]));
+            } 
+        }
+        let cart = [];
+        localStorageValues.forEach(function(obj) {   
+            Object.keys(obj).forEach(key => {
+                cart.push(obj[key]);
+            })   
+        })
+        let arraysofId = [];
+        for (i = 0; i < cart.length; i++) {
+            arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
+        }
+        let products = [].concat.apply([], arraysofId);
         let postRequest = new XMLHttpRequest();
         let data = {contact: contact, products: products}
         let url = 'http://localhost:3000/api/teddies/order';
@@ -261,7 +285,14 @@ const submitOrder = () => {
         }
 
         location.href = 'orderconfirmation.html';
+
     }).catch((error) => {
-        alert(error);
+        let errorMessage = document.createElement('p');
+        errorMessage.textContent = error;
+        let cartPage = document.getElementById('cartpage');
+        cartPage.removeChild(cartPage.childNodes[1]);
+        checkoutForm.setAttribute('hidden', 'true');
+        formContainer.className = 'col-12 text-center pt-5'
+        formContainer.appendChild(errorMessage);
     })
 }

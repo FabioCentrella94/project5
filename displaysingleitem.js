@@ -67,13 +67,18 @@ promise.then((response) => {
     colorDrop.textContent = response.colors[0];
 
     // for each color in the array colors in the response object create a 'p' element and append them to the dropdown to choose the color:
+    let dropdown = document.getElementById('colors');
     for (i = 0; i < response.colors.length; i++) { 
         let colorsOption = document.createElement('p');
         colorsOption.textContent = response.colors[i];
         colorsOption.setAttribute('class', 'dropdown-item')
-        let dropdown = document.getElementById('colors');
         dropdown.appendChild(colorsOption); 
-        colorsOption.setAttribute('class', 'choosecolors')                 
+        colorsOption.setAttribute('class', 'choosecolors')              
+    }
+
+    // if teddy has just one varian color the dropdown is not showed:
+    if (dropdown.childElementCount <= 1) {
+        dropdown.setAttribute('hidden', 'true');
     }
 
     // set the displayed color of the dropdown to choose the color equal to the selected color in the dropdown:
@@ -148,5 +153,10 @@ promise.then((response) => {
         }
     }
 }).catch((error) => {
-    alert(error);
+    let errorMessage = document.getElementById('teddydetails');
+    errorMessage.classList.remove('col-xl-6');
+    errorMessage.className = 'overflow-auto text-center m-auto p-5'
+    let singleItem = document.getElementById('item');
+    singleItem.removeChild(errorMessage.previousElementSibling);
+    errorMessage.innerHTML = error;
 })
