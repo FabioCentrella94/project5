@@ -46,9 +46,15 @@ if (navigator.onLine) {
       document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
     }
   }).catch((error) => {
-    let salelist = document.getElementById('salelist');
-    salelist.className = 'm-auto overflow-auto p-5 text-center';
-    salelist.innerHTML = error; 
+    if (!error.response) {
+      let salelist = document.getElementById('salelist');
+      salelist.className = 'm-auto overflow-auto p-5 text-center';
+      salelist.innerHTML = 'Error: Network Error'; 
+    } else {
+      let salelist = document.getElementById('salelist');
+      salelist.className = 'm-auto overflow-auto p-5 text-center';
+      salelist.innerHTML = error;
+    }
   });
 } else {
   window.document.addEventListener('DOMContentLoaded', () => {

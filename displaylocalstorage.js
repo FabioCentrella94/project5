@@ -288,13 +288,24 @@ if (navigator.onLine) {
             location.href = 'orderconfirmation.html';
 
         }).catch((error) => {
-            let errorMessage = document.createElement('p');
-            errorMessage.textContent = error;
-            let cartPage = document.getElementById('cartpage');
-            cartPage.removeChild(cartPage.childNodes[1]);
-            checkoutForm.setAttribute('hidden', 'true');
-            formContainer.className = 'col-12 text-center pt-5'
-            formContainer.appendChild(errorMessage);
+            if (!error.response) {
+                let errorMessage = document.createElement('p');
+                errorMessage.textContent = 'Error: Network Error';
+                let cartPage = document.getElementById('cartpage');
+                cartPage.removeChild(cartPage.childNodes[1]);
+                checkoutForm.setAttribute('hidden', 'true');
+                formContainer.className = 'col-12 text-center pt-5'
+                formContainer.appendChild(errorMessage);
+            } else {
+                let errorMessage = document.createElement('p');
+                errorMessage.textContent = error;
+                let cartPage = document.getElementById('cartpage');
+                cartPage.removeChild(cartPage.childNodes[1]);
+                checkoutForm.setAttribute('hidden', 'true');
+                formContainer.className = 'col-12 text-center pt-5'
+                formContainer.appendChild(errorMessage);
+            }
+
         })
     }
 } else {

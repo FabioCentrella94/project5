@@ -34,11 +34,11 @@ if (navigator.onLine) {
 
         // set the properties of the object 'productsNameObject' where the key is the name of the teddy and the value is the number of how many times the teddy name is repeated in the array 'productsNameTemporary';
         var productsNameObject = {};
-        productsNameTemporary.forEach(function(i) {productsNameObject[i] = (productsNameObject[i]||0) + 1;});
+        productsNameTemporary.forEach(i => {productsNameObject[i] = (productsNameObject[i]||0) + 1;});
 
         // split the name and quantity of every teddy with a comma and add the dot for the last teddy:
         let teddyAndQuantity = document.createElement('p');
-        teddyAndQuantity.textContent = Object.keys(productsNameObject).map(function(key) {
+        teddyAndQuantity.textContent = Object.keys(productsNameObject).map(key => {
         return key +  " " +  'x' + ' ' + productsNameObject[key]
         }).join(', ') + '.';
         orderConfirmation.appendChild(teddyAndQuantity);
@@ -66,6 +66,7 @@ if (navigator.onLine) {
     });
 
     displayOrderConfirmation();
+    
 } else {
     window.document.addEventListener('DOMContentLoaded', () => {
         let orderConfirmation = document.getElementById('orderconfirmation');

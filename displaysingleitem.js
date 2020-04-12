@@ -156,12 +156,21 @@ if (navigator.onLine) {
             }
         }
     }).catch((error) => {
-        let errorMessage = document.getElementById('teddydetails');
-        errorMessage.classList.remove('col-xl-6');
-        errorMessage.className = 'overflow-auto text-center m-auto p-5'
-        let singleItem = document.getElementById('item');
-        singleItem.removeChild(errorMessage.previousElementSibling);
-        errorMessage.innerHTML = error;
+        if (!error.response) {
+            let errorMessage = document.getElementById('teddydetails');
+            errorMessage.classList.remove('col-xl-6');
+            errorMessage.className = 'overflow-auto text-center m-auto p-5'
+            let singleItem = document.getElementById('item');
+            singleItem.removeChild(errorMessage.previousElementSibling);
+            errorMessage.innerHTML = 'Error: Network Error';
+        } else {
+            let errorMessage = document.getElementById('teddydetails');
+            errorMessage.classList.remove('col-xl-6');
+            errorMessage.className = 'overflow-auto text-center m-auto p-5'
+            let singleItem = document.getElementById('item');
+            singleItem.removeChild(errorMessage.previousElementSibling);
+            errorMessage.innerHTML = error;
+        }
     });
 
 } else {
