@@ -217,6 +217,7 @@ if (navigator.onLine) {
         checkoutInputField[i].addEventListener('input', () => {
             if (checkoutInputField[0].value.length >= 1 && checkoutInputField[0].value.match(checkoutInputField[0].pattern) && checkoutInputField[1].value.length >= 1 && checkoutInputField[1].value.match(checkoutInputField[1].pattern) && checkoutInputField[2].value.length >= 1 && checkoutInputField[2].value.match(checkoutInputField[2].pattern) && checkoutInputField[3].value.length >= 1 && checkoutInputField[3].value.match(checkoutInputField[3].pattern) && checkoutInputField[4].value.length >= 1 && checkoutInputField[4].value.match(checkoutInputField[4].pattern)) {
                 checkoutButton.removeAttribute('hidden');
+
             } else {
                 checkoutButton.setAttribute('hidden', 'true');
             }
@@ -226,7 +227,9 @@ if (navigator.onLine) {
     checkoutButton.addEventListener('click', ($event) => {
         $event.preventDefault();
         setContactValues();
-        submitOrder();
+        if (checkoutInputField[0].value.length >= 1 && checkoutInputField[0].value.match(checkoutInputField[0].pattern) && checkoutInputField[1].value.length >= 1 && checkoutInputField[1].value.match(checkoutInputField[1].pattern) && checkoutInputField[2].value.length >= 1 && checkoutInputField[2].value.match(checkoutInputField[2].pattern) && checkoutInputField[3].value.length >= 1 && checkoutInputField[3].value.match(checkoutInputField[3].pattern) && checkoutInputField[4].value.length >= 1 && checkoutInputField[4].value.match(checkoutInputField[4].pattern)) {
+            submitOrder();
+        }
     })
 
     // set the value of the properties of the contact object equal to the value of the input text form:
