@@ -5,10 +5,11 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="UTF-8">
+        <script src="displaysalelist.js" type="text/javascript" defer></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css" type="text/css">
         <script src="https://kit.fontawesome.com/dc16209174.js" crossorigin="anonymous"></script>
-        <script src="displaysalelist.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="style.css" type="text/css">
     </head>
 
     <body class="container-fluid">
@@ -41,7 +42,9 @@
 
         <div id="salelist" class="text-center mt-4 mt-md-5">
 
-            <div id="carouselControls" class="col carousel slide" data-ride="carousel">
+            <img src="https://media.giphy.com/media/y1ZBcOGOOtlpC/giphy.gif" alt="" id="loadinggif">
+
+            <div id="carouselControls" class="col carousel slide" data-ride="carousel" hidden>
                 <div id="carouselslide" class="carousel-inner"></div>
                 <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon bg-secondary"></span>

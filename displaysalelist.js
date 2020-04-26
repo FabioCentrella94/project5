@@ -1,3 +1,6 @@
+let salelist = document.getElementById('salelist');
+let loadingGif = document.getElementById('loadinggif');
+
 // check if there is Internet Connection:
 if (navigator.onLine) {
 
@@ -17,6 +20,9 @@ if (navigator.onLine) {
     }
   })
   promise.then((response) => {
+    salelist.removeChild(loadingGif);
+    let carouseControls = document.getElementById('carouselControls');
+    carouseControls.removeAttribute('hidden');
     for (i = 0; i < response.length; i++) { 
       let carouselItem = document.createElement('div');
       if (i === 0) {
@@ -47,25 +53,16 @@ if (navigator.onLine) {
     }
   }).catch((error) => {
     if (!error.response) {
-      let salelist = document.getElementById('salelist');
       salelist.className = 'm-auto overflow-auto p-5 text-center';
-      salelist.innerHTML = 'Error: Network Error'; 
+      salelist.innerHTML = 'Error: Network Error';
     } else {
-      let salelist = document.getElementById('salelist');
       salelist.className = 'm-auto overflow-auto p-5 text-center';
       salelist.innerHTML = error;
     }
   });
 } else {
   window.document.addEventListener('DOMContentLoaded', () => {
-    let salelist = document.getElementById('salelist');
     salelist.className = 'p-5 text-center';
     salelist.innerHTML = 'No Connection';
   })
 };
-
-
-
-     
-  
-
