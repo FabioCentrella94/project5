@@ -1,3 +1,7 @@
+let singleItem = document.getElementById('item');
+let loadingGif = document.getElementById('loadinggif');
+let teddyDetails = document.getElementById('teddydetails'); 
+
 // check if there is Internet Connection:
 if (navigator.onLine) {
 
@@ -18,6 +22,8 @@ if (navigator.onLine) {
         }
     })
     promise.then((response) => {
+        singleItem.removeChild(loadingGif);
+        teddyDetails.removeAttribute('hidden');
         let name = document.getElementById('name');
         name.textContent = response.name;
         let image = document.getElementById('image');
@@ -38,7 +44,7 @@ if (navigator.onLine) {
         // set an object with different properties equal to the response got from the server:
         let teddy = {
             id: response._id,
-            image: response.imageUrl,
+            image: response.imageUrl.replace('http://localhost:3000/', ''),
             color: response.colors[0],
             quantity: 1,
             price: response.price
@@ -94,7 +100,6 @@ if (navigator.onLine) {
         } 
 
         // create a figurecaption containing the button add the item to the cart:
-        let teddyDetails = document.getElementById('teddydetails'); 
         let addToCartButton = document.createElement('button');
         addToCartButton.type = 'button';
         addToCartButton.setAttribute('class', 'btn btn-secondary text-light mt-5 mb-5');
@@ -104,7 +109,10 @@ if (navigator.onLine) {
             totalItemInCart();
             addItemToCart();
             totalCost();
-            location.reload();   
+            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            colorDrop.textContent = response.colors[0];
+            teddy.quantity = 1;
+            quantityToAdd.textContent = 1; 
         });
 
         // set a key in local showing the total number of item in the cart:
@@ -142,7 +150,7 @@ if (navigator.onLine) {
                 }          
             }
 
-            localStorage.setItem(response._id, JSON.stringify(itemInCart));  
+            localStorage.setItem(response._id, JSON.stringify(itemInCart));
         }
 
         // set a key in local storage showing the total cost of the item in the cart:
@@ -156,11 +164,19 @@ if (navigator.onLine) {
             }
         }
     }).catch((error) => {
+        if (localStorage.getItem("totalitemincart") === null) {
+            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+            displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+          } else {
+            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+          }
+        console.log(error);
+        singleItem.removeChild(loadingGif);
+        teddyDetails.removeAttribute('hidden');
         if (!error.response) {
             let errorMessage = document.getElementById('teddydetails');
             errorMessage.classList.remove('col-xl-6');
             errorMessage.className = 'overflow-auto text-center m-auto p-5'
-            let singleItem = document.getElementById('item');
             singleItem.removeChild(errorMessage.previousElementSibling);
             errorMessage.innerHTML = 'Error: Network Error';
         } else {
@@ -174,7 +190,15 @@ if (navigator.onLine) {
     });
 
 } else {
+    singleItem.removeChild(loadingGif);
+    teddyDetails.removeAttribute('hidden');
     window.document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem("totalitemincart") === null) {
+            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+            displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+          } else {
+            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+          }
         let errorMessage = document.getElementById('teddydetails');
         errorMessage.classList.remove('col-xl-6');
         errorMessage.className = 'overflow-auto text-center m-auto p-5'

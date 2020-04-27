@@ -1,3 +1,7 @@
+let loadingGif = document.createElement('img');
+loadingGif.src = "images/7plQ.gif";
+loadingGif.className = 'col';
+
 // check if there is Internet Connection:
 if (navigator.onLine) {
 
@@ -20,7 +24,7 @@ if (navigator.onLine) {
 
     // loop through the object in the array localStorageValues and push the properties (objects in this case) of each object in the array named Cart:
     let cart = [];
-    localStorageValues.forEach(function(obj) {   
+    localStorageValues.forEach((obj) => {   
         Object.keys(obj).forEach(key => {
             cart.push(obj[key]);
         })   
@@ -225,6 +229,9 @@ if (navigator.onLine) {
     }
 
     checkoutButton.addEventListener('click', ($event) => {
+        document.getElementById('cartpage').setAttribute('hidden', 'true');
+        document.body.className = 'container-fluid';
+        document.body.appendChild(loadingGif);
         $event.preventDefault();
         setContactValues();
         if (checkoutInputField[0].value.length >= 1 && checkoutInputField[0].value.match(checkoutInputField[0].pattern) && checkoutInputField[1].value.length >= 1 && checkoutInputField[1].value.match(checkoutInputField[1].pattern) && checkoutInputField[2].value.length >= 1 && checkoutInputField[2].value.match(checkoutInputField[2].pattern) && checkoutInputField[3].value.length >= 1 && checkoutInputField[3].value.match(checkoutInputField[3].pattern) && checkoutInputField[4].value.length >= 1 && checkoutInputField[4].value.match(checkoutInputField[4].pattern)) {
@@ -291,18 +298,29 @@ if (navigator.onLine) {
             location.href = 'orderconfirmation.html';
 
         }).catch((error) => {
+            if (localStorage.getItem("totalitemincart") === null) {
+                let displayTotalItemInCart = document.getElementById('displaytotalitem');
+                displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+              } else {
+                document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+              }
+            console.log(error);
             if (!error.response) {
+                document.body.removeChild(loadingGif);
                 let errorMessage = document.createElement('p');
                 errorMessage.textContent = 'Error: Network Error';
                 let cartPage = document.getElementById('cartpage');
+                cartPage.removeAttribute('hidden');
                 cartPage.removeChild(cartPage.childNodes[1]);
                 checkoutForm.setAttribute('hidden', 'true');
                 formContainer.className = 'col-12 text-center pt-5'
                 formContainer.appendChild(errorMessage);
             } else {
+                document.body.removeChild(loadingGif);
                 let errorMessage = document.createElement('p');
                 errorMessage.textContent = error;
                 let cartPage = document.getElementById('cartpage');
+                cartPage.removeAttribute('hidden');
                 cartPage.removeChild(cartPage.childNodes[1]);
                 checkoutForm.setAttribute('hidden', 'true');
                 formContainer.className = 'col-12 text-center pt-5'
@@ -313,7 +331,15 @@ if (navigator.onLine) {
     }
 } else {
     window.document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem("totalitemincart") === null) {
+            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+            displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+          } else {
+            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+          }
+        document.body.removeChild(loadingGif);
         let cartPage = document.getElementById('cartpage');
+        cartPage.removeAttribute('hidden');
         cartPage.removeChild(cartPage.childNodes[1]);
         let checkoutForm = document.getElementById('inputform');
         checkoutForm.setAttribute('hidden', 'true');

@@ -1,9 +1,10 @@
+let orderConfirmation = document.getElementById('orderconfirmation');
+
 // check if there is Internet Connection:
 if (navigator.onLine) {
 
     // show the response from the post request stored in the session storage and the totalcost of the cart:
     const displayOrderConfirmation = ('DOMContentLoaded', () => {
-        let orderConfirmation = document.getElementById('orderconfirmation');
         let thankYouText = document.createElement('h1');
         thankYouText.setAttribute('class', 'mb-5')
         thankYouText.textContent = 'Thanks for your order!';
@@ -68,6 +69,7 @@ if (navigator.onLine) {
     displayOrderConfirmation();
     
 } else {
+    orderConfirmation.previousElementSibling.setAttribute('hidden', 'true');
     window.document.addEventListener('DOMContentLoaded', () => {
         let orderConfirmation = document.getElementById('orderconfirmation');
         orderConfirmation.innerHTML = 'No Connection';

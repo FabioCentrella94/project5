@@ -52,6 +52,13 @@ if (navigator.onLine) {
       document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
     }
   }).catch((error) => {
+    if (localStorage.getItem("totalitemincart") === null) {
+      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+      displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+    } else {
+      document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+    }
+    console.log(error);
     if (!error.response) {
       salelist.className = 'm-auto overflow-auto p-5 text-center';
       salelist.innerHTML = 'Error: Network Error';
@@ -62,6 +69,12 @@ if (navigator.onLine) {
   });
 } else {
   window.document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem("totalitemincart") === null) {
+      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+      displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+    } else {
+      document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+    }
     salelist.className = 'p-5 text-center';
     salelist.innerHTML = 'No Connection';
   })
