@@ -5,10 +5,11 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
-        <script src="node_modules/popper.js/dist/umd/popper.min.js" defer></script>
         <link rel="stylesheet" href="style.css" type="text/css">
         <script src="displaysingleitem.js" type="text/javascript" defer></script>
     </head>
@@ -41,9 +42,14 @@
             
         </header>
 
-        <div class="row mt-4 mt-md-5 d-flex align-items-center" id="item">
-        <img class="col-12" src="images/7plQ.gif" alt="" id="loadinggif"></img>
-            <div class="card col-12 col-xl-6">
+        <div class="row alert alert-success justify-content-center sticky-top" role="alert" id="alert" hidden>
+            Item Added To Cart
+        </div>
+
+
+        <div class="row mt-4 mt-md-5 mb-5 d-flex align-items-center text-center" id="item">
+            <img class="col-12 col-md-4 m-auto" src="images/7plQ.gif" alt="" id="loadinggif"></img>
+            <div class="card col-12 col-xl-6" id="imagecontainer" hidden>
                 <img class="m-auto" id="image">
             </div>
             <div id="teddydetails" class="col-12 col-xl-6 text-center mt-lg-4" hidden>

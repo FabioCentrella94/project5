@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
         <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
-        <script src="node_modules/popper.js/dist/umd/popper.min.js" defer></script>
         <link rel="stylesheet" href="style.css" type="text/css">
         <script src="displaylocalstorage.js" type="text/javascript" defer></script>
     </head>
@@ -42,14 +42,23 @@
 
         </header>
 
+        <div class="row alert alert-success justify-content-center sticky-top" role="alert" id="alert" hidden>
+            Item Removed From Cart
+        </div>
+
+        <div class="row d-flex justify-content-center">
+            <img class="col-12 col-md-4" src="images/7plQ.gif" alt="" id="loadinggif" hidden></img>
+        </div>
+       
+
 
         <div class="row" id="cartpage">
 
-            <div class="col-xl-3">
+            <div class="col-xl-3 mb-5 mb-lg-auto" id="cartcontainer">
                 <div class="col-12 d-flex flex-row flex-xl-column text-center py-5" id="cart"></div>
             </div>
 
-            <div class="col-12 col-xl-9 d-flex justify-content-center shadow-none mb-5" id="formcontainer">
+            <div class="col-12 col-xl-9 d-flex justify-content-center shadow-none mt-xl-3 mb-5" id="formcontainer">
                 <form class=" text-center mt-md-5 mb-5 mb-md-auto" id="inputform">
                     <div class="form-group">
                       <label for="firstname">First Name</label>
@@ -71,7 +80,7 @@
                         <label for="email">E-Mail</label>
                         <input type="text" class="form-control text-center shadow-none" id="email" name="E-mail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$">
                       </div>
-                      <button type="submit" id="submitorder" class="btn btn-secondary text-light mt-3 mb-5" hidden>Submit Order</button>
+                      <button type="submit" id="submitorder" class="btn btn-secondary text-light mt-3 mb-1" hidden>Submit Order</button>
                 </form>
             </div>       
         </div>

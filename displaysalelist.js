@@ -1,10 +1,10 @@
 let salelist = document.getElementById('salelist');
 let loadingGif = document.getElementById('loadinggif');
 
-// check if there is Internet Connection:
+// if there is Internet Connection:
 if (navigator.onLine) {
 
-  // fetch data from the server and then for every product create figure containing image and name and append it to the carousel slide:
+  // Promise:
   const promise = new Promise((resolve, reject) => {
     let apiRequest = new XMLHttpRequest();
     apiRequest.open('GET', 'http://localhost:3000/api/teddies/');
@@ -19,10 +19,14 @@ if (navigator.onLine) {
       }
     }
   })
+  // if Promise resolve create for each teddy from the response an image with his name for the Carousel Slide:
   promise.then((response) => {
+    // remove loading gif:
     salelist.removeChild(loadingGif);
     let carouseControls = document.getElementById('carouselControls');
+    // show the carousel after the loading gif is removed:
     carouseControls.removeAttribute('hidden');
+    // for the first Carousel Item set the class active:
     for (i = 0; i < response.length; i++) { 
       let carouselItem = document.createElement('div');
       if (i === 0) {
@@ -44,14 +48,16 @@ if (navigator.onLine) {
       carouselItemImage.src = response[i].imageUrl;
       carouselItemLink.appendChild(carouselItemImage);   
     } 
-    // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart: 
+    // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
     if (localStorage.getItem("totalitemincart") === null) {
       let displayTotalItemInCart = document.getElementById('displaytotalitem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
     } else {
       document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
     }
+    // if Promise doesn't resolve:
   }).catch((error) => {
+    // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
     if (localStorage.getItem("totalitemincart") === null) {
       let displayTotalItemInCart = document.getElementById('displaytotalitem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
@@ -59,7 +65,8 @@ if (navigator.onLine) {
       document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
     }
     console.log(error);
-    if (!error.response) {
+    // if it doesn't get response from server show 'Network Error' otherwise show the response from the server:
+    if (!error) {
       salelist.className = 'm-auto overflow-auto p-5 text-center';
       salelist.innerHTML = 'Error: Network Error';
     } else {
@@ -67,8 +74,10 @@ if (navigator.onLine) {
       salelist.innerHTML = error;
     }
   });
+  // if there is not connection to internet show error 'No Connection':
 } else {
   window.document.addEventListener('DOMContentLoaded', () => {
+    // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
     if (localStorage.getItem("totalitemincart") === null) {
       let displayTotalItemInCart = document.getElementById('displaytotalitem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';

@@ -22,7 +22,6 @@ h2 {
 
 #cart {
     overflow: auto;
-    max-height: 100vh;
 }
 
 #cart img {
@@ -61,6 +60,9 @@ div span {
     #item {
         margin-bottom: 50% !important;
     }
+    #cart {
+        padding-bottom: unset !important;
+    }
     #cart img {
         height: 45% !important;
         width: 100% !important;
@@ -96,8 +98,8 @@ div span {
         width: 60%;
     }
     #cart img {
-        height: 65%;
-        width: 75%;
+        height: 60%;
+        width: 70%;
     }
     form {
         width: 75%;
@@ -117,8 +119,11 @@ div span {
     #image {
         width: 100%;
     }
+    #cart {
+        max-height: 100vh;
+    }
     #cart img {
-        height: 30%;
+        height: 45%;
         width: 100%;
     }
     form {
