@@ -340,7 +340,7 @@ if (navigator.onLine) {
             sessionStorage.setItem('orderdetail', JSON.stringify(response));
 
             // link to the orderconfirmation page:
-            location.href = 'orderconfirmation.html';
+            location.href = '/pages/orderconfirmation.html';
         // if promise doesn't resolve:
         }).catch((error) => {         
             // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 

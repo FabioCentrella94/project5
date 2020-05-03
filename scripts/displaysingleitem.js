@@ -49,7 +49,7 @@ if (navigator.onLine = true) {
         // set an object with properties equal to the response got from the server:
         let teddy = {
             id: response._id,
-            image: response.imageUrl.replace('http://localhost:3000/', ''),
+            image: response.imageUrl.replace('http://localhost:3000/', '../'),
             color: response.colors[0],
             quantity: 1,
             price: response.price

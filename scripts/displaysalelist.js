@@ -41,7 +41,7 @@ if (navigator.onLine) {
       carouselItemName.className = 'mb-3 my-3 my-md-5';
       carouselItem.appendChild(carouselItemName);
       let carouselItemLink = document.createElement('a');
-      carouselItemLink.href = 'singleitem.html' + '?' + response[i]._id;
+      carouselItemLink.href = '/pages/singleitem.html' + '?' + response[i]._id;
       carouselItem.appendChild(carouselItemLink);
       let carouselItemImage = document.createElement('img');
       carouselItemImage.className = 'border border-secondary';
