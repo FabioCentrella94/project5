@@ -7,7 +7,7 @@ if (navigator.onLine) {
   // Promise:
   const promise = new Promise((resolve, reject) => {
     let apiRequest = new XMLHttpRequest();
-    apiRequest.open('GET', 'https://localhost:3000/api/teddies/');
+    apiRequest.open('GET', 'http://localhost:3000/api/teddies/');
     apiRequest.send();
     apiRequest.onreadystatechange = () => {
       if (apiRequest.readyState === 4) {
