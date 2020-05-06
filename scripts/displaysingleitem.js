@@ -4,7 +4,7 @@ let teddyDetails = document.getElementById('teddydetails');
 let alertMessage = document.getElementById('alert');
 
 // if there is Internet Connection:
-if (navigator.onLine = true) {
+if (navigator.onLine) {
 
     // Promise:
     const promise = new Promise((resolve, reject) => {
