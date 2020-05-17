@@ -1,4 +1,4 @@
-let loadingGif = document.getElementById('loadinggif');
+let loadingGif = document.getElementById('loadingGif');
 let alertMessage = document.getElementById('alert');
 let cartContainer = document.getElementById('cartcontainer');
 

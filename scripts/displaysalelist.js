@@ -1,5 +1,5 @@
-let salelist = document.getElementById('salelist');
-let loadingGif = document.getElementById('loadinggif');
+let saleList = document.getElementById('saleList');
+let loadingGif = document.getElementById('loadingGif');
 
 // if there is Internet Connection:
 if (navigator.onLine) {
@@ -22,7 +22,7 @@ if (navigator.onLine) {
   // if Promise resolve create for each teddy from the response an image with his name for the Carousel Slide:
   promise.then((response) => {
     // remove loading gif:
-    salelist.removeChild(loadingGif);
+    saleList.removeChild(loadingGif);
     let carouseControls = document.getElementById('carouselControls');
     // show the carousel after the loading gif is removed:
     carouseControls.removeAttribute('hidden');
