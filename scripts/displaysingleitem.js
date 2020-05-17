@@ -196,7 +196,7 @@ if (navigator.onLine) {
           }
         console.log(error);
         // remove loading gif:
-        singleItem.removeChild(loadingGif);
+        loadingGif.setAttribute('hidden', 'true')
         // remove hidden attribute to teddydetails section in order to show the error:
         teddyDetails.removeAttribute('hidden');
         // if it doesn't get response from server show 'Network Error' otherwise show the response from the server:
@@ -212,7 +212,7 @@ if (navigator.onLine) {
             errorMessage.className = 'overflow-auto text-center m-auto p-5'
             let singleItem = document.getElementById('item');
             singleItem.removeChild(errorMessage.previousElementSibling);
-            errorMessage.innerHTML = error;
+            errorMessage.innerHTML = 'Teddy Not Found';
         }
     });
 // if there is not connection to internet show error 'No Connection':
