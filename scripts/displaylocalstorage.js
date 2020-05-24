@@ -1,17 +1,17 @@
 let loadingGif = document.getElementById('loadingGif');
 let alertMessage = document.getElementById('alert');
-let cartContainer = document.getElementById('cartcontainer');
+let cartContainer = document.getElementById('cartContainer');
 
 // check if there is Internet Connection:
 if (navigator.onLine) {
 
     let displayCart = document.getElementById('cart');
        // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-    if (localStorage.getItem("totalitemincart") === null) {
-        let displayTotalItemInCart = document.getElementById('displaytotalitem');
+    if (localStorage.getItem("totalItemInCart") === null) {
+        let displayTotalItemInCart = document.getElementById('displayTotalItem');
         displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
     } else {
-        document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+        document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
     }
 
     // loop through the key in local storage and if their value is an object push it in the array 'localStorageValues':
@@ -31,12 +31,12 @@ if (navigator.onLine) {
     })
 
     // loop through each object in the 'cart' array and for each object create a new array inside the array 'arraysOfId', each array created contains the Id key repeated times the quantity key of the object:
-    let arraysofId = [];
+    let arraysOfId = [];
     for (i = 0; i < cart.length; i++) {
-        arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
+        arraysOfId[i] = new Array(cart[i].quantity).fill(cart[i].id);
     }
     // concatenate all the arrays of Id present in the arrays 'arraysofId' into the array 'product':
-    let products = [].concat.apply([], arraysofId);
+    let products = [].concat.apply([], arraysOfId);
 
     // for each object in the array Cart create a figurecaption containing the image of the object, the price, the quantity, the plus and minus quantity buttons, the total cost and the remove item button:
     for (i = 0; i < cart.length; i++) {
@@ -45,24 +45,24 @@ if (navigator.onLine) {
     let image = document.createElement('img');
     image.src = cart[i].image;
     itemContainer.appendChild(image);
-    let figcaption = document.createElement('figcaption');
-    itemContainer.appendChild(figcaption);
+    let figCaption = document.createElement('figcaption');
+    itemContainer.appendChild(figCaption);
     let color = document.createElement('p');
     color.textContent = cart[i].color;
-    figcaption.appendChild(color);
+    figCaption.appendChild(color);
     let price = document.createElement('p');
     price.textContent = '$' + (cart[i].price / 100).toFixed(2);
-    figcaption.appendChild(price);
+    figCaption.appendChild(price);
     let quantityContainer = document.createElement('div');
     quantityContainer.style.display = 'flex';
     quantityContainer.style.justifyContent = 'space-around';
     quantityContainer.style.alignItems = 'center';
-    figcaption.appendChild(quantityContainer);
+    figCaption.appendChild(quantityContainer);
     let minusButton = document.createElement('button');
     minusButton.textContent = '-';
     minusButton.value = cart[i].color;
     minusButton.name = cart[i].id;
-    minusButton.setAttribute('class', 'minusbutton bg-secondary text-light rounded-circle');
+    minusButton.setAttribute('class', 'minusButton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(minusButton);
     let quantity = document.createElement('p');
     quantity.textContent = cart[i].quantity;
@@ -71,36 +71,36 @@ if (navigator.onLine) {
     plusButton.textContent = '+';
     plusButton.value = cart[i].color;
     plusButton.name = cart[i].id;
-    plusButton.setAttribute('class', 'plusbutton bg-secondary text-light rounded-circle');
+    plusButton.setAttribute('class', 'plusButton bg-secondary text-light rounded-circle');
     quantityContainer.appendChild(plusButton);
     let totalPrice = document.createElement('p');
     totalPrice.textContent = '$' + ((cart[i].price * cart[i].quantity) / 100).toFixed(2);
-    figcaption.appendChild(totalPrice);
+    figCaption.appendChild(totalPrice);
     let removeItemButton = document.createElement('button');
-    removeItemButton.setAttribute('class', 'removeitem bg-secondary text-light');
+    removeItemButton.setAttribute('class', 'removeItem bg-secondary text-light');
     removeItemButton.textContent = 'Remove Item';
     removeItemButton.value = cart[i].color;
     removeItemButton.name = cart[i].id;
-    figcaption.appendChild(removeItemButton);
+    figCaption.appendChild(removeItemButton);
     let displayCart = document.getElementById('cart');
     displayCart.appendChild(itemContainer);
     }
 
     // code for the functionality of the minus button, reduce quantity of one:
-    let reduceQuantity = document.querySelectorAll('.minusbutton');
+    let reduceQuantity = document.querySelectorAll('.minusButton');
     for (i = 0; i < reduceQuantity.length; i++) {
         reduceQuantity[i].addEventListener('click', ($event) => {
-            let totalItem = localStorage.getItem('totalitemincart');
+            let totalItem = localStorage.getItem('totalItemInCart');
             totalItem = parseInt(totalItem);
-            localStorage.setItem('totalitemincart', totalItem - 1);
+            localStorage.setItem('totalItemInCart', totalItem - 1);
             itemInCart = localStorage.getItem($event.target.name);
             itemInCart = JSON.parse(itemInCart);
             // reduce quantity in the cart element in the navbar:
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
             // reduce the price of key 'totalcost' in the localstorage:
-            let totalCost = localStorage.getItem('totalcost');
+            let totalCost = localStorage.getItem('totalCost');
             totalCost = parseInt(totalCost);
-            localStorage.setItem('totalcost', totalCost - itemInCart[$event.target.value].price);
+            localStorage.setItem('totalCost', totalCost - itemInCart[$event.target.value].price);
             // if the quantity is greater then one then decrease it by one in the localStorage and reduce the totalcost of the teddy displayed:
             if (itemInCart[$event.target.value].quantity > 1) {
                 itemInCart[$event.target.value].quantity -= 1;
@@ -133,33 +133,33 @@ if (navigator.onLine) {
     }
 
     // code for the functionality of the plus button, increase quantity of one::
-    let increaseQuantity = document.querySelectorAll('.plusbutton');
+    let increaseQuantity = document.querySelectorAll('.plusButton');
     for (i = 0; i < increaseQuantity.length; i++) {
         increaseQuantity[i].addEventListener('click', ($event) => {
             // increase quantity by one in the localStorage key 'totalitemincart':
-            let totalItem = localStorage.getItem('totalitemincart');
+            let totalItem = localStorage.getItem('totalItemInCart');
             totalItem = parseInt(totalItem);
-            localStorage.setItem('totalitemincart', totalItem + 1);
+            localStorage.setItem('totalItemInCart', totalItem + 1);
             itemInCart = localStorage.getItem($event.target.name);
             itemInCart = JSON.parse(itemInCart);
             // increase quantity in the cart element in the navbar:
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
             // increase quantity by one in the localStorage:
             itemInCart[$event.target.value].quantity += 1;
             // increase the totalcost displayed of the target teddy:
             $event.target.parentElement.nextElementSibling.textContent = '$' + ((itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity) / 100).toFixed(2);
             localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
             // increase the value of the 'totalcost' key in localstorage:
-            let totalCost = localStorage.getItem('totalcost');
+            let totalCost = localStorage.getItem('totalCost');
             totalCost = parseInt(totalCost);
-            localStorage.setItem('totalcost', totalCost + itemInCart[$event.target.value].price);
+            localStorage.setItem('totalCost', totalCost + itemInCart[$event.target.value].price);
             // increase displayed quantity by one:
             $event.target.previousSibling.textContent = Number($event.target.previousSibling.textContent) + 1;
         })
     }
 
     // code for the functionality of the remove item button:
-    let removeItem = document.querySelectorAll('.removeitem');
+    let removeItem = document.querySelectorAll('.removeItem');
     for (i = 0; i < removeItem.length; i++) {
         removeItem[i].addEventListener('click', ($event) => {
             // a message appear when remove item button is clicked and disappear after 1000ms:
@@ -167,21 +167,21 @@ if (navigator.onLine) {
             setTimeout(() => { 
                 alertMessage.setAttribute('hidden', 'true'); 
             }, 1000);
-            let totalItem = localStorage.getItem('totalitemincart');
+            let totalItem = localStorage.getItem('totalItemInCart');
             totalItem = parseInt(totalItem);
             itemInCart = localStorage.getItem($event.target.name);
             itemInCart = JSON.parse(itemInCart);
-            let totalCost = localStorage.getItem('totalcost');
+            let totalCost = localStorage.getItem('totalCost');
             totalCost = parseInt(totalCost);
             // the totalcost of the teddy is decreased from the key in the localStorage 'totalcost':
-            localStorage.setItem('totalcost', totalCost - (itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity));
+            localStorage.setItem('totalCost', totalCost - (itemInCart[$event.target.value].price * itemInCart[$event.target.value].quantity));
             // the quantity of the teddy removed is decreased from the localStorage key 'totalitemincart':
-            localStorage.setItem('totalitemincart', totalItem - itemInCart[$event.target.value].quantity);
+            localStorage.setItem('totalItemInCart', totalItem - itemInCart[$event.target.value].quantity);
             // the object is removed from the localStorage:
             delete itemInCart[$event.target.value];      
             localStorage.setItem($event.target.name, JSON.stringify(itemInCart));
             // quantity is updated in the cart element in the navbar:
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
             // when the key in localStorage become an empty object with no properties is automatically removed:
             if (localStorage.getItem($event.target.name) == '{}') {
                 localStorage.removeItem($event.target.name);
@@ -211,10 +211,10 @@ if (navigator.onLine) {
         formInputField[i].appendChild(alertText);
         }
 
-    let checkoutButton = document.getElementById('submitorder');
+    let checkoutButton = document.getElementById('submitOrder');
     let checkoutInputField = document.querySelectorAll('input');
-    let checkoutForm = document.getElementById('inputform');
-    let formContainer = document.getElementById('formcontainer');
+    let checkoutForm = document.getElementById('inputForm');
+    let formContainer = document.getElementById('formContainer');
     // check if the lenght of the array 'products' is greater than one:
     if (products.length >= 1) {
         checkoutForm.removeAttribute('hidden');
@@ -267,7 +267,7 @@ if (navigator.onLine) {
 
     // when submit order button is pressed the content of the cart page is hided and a gif is displayed:
     checkoutButton.addEventListener('click', ($event) => {
-        document.getElementById('cartpage').setAttribute('hidden', 'true');
+        document.getElementById('cartPage').setAttribute('hidden', 'true');
         loadingGif.removeAttribute('hidden');
         $event.preventDefault();
         setContactValues();
@@ -308,11 +308,11 @@ if (navigator.onLine) {
                     cart.push(obj[key]);
                 })   
             })
-            let arraysofId = [];
+            let arraysOfId = [];
             for (i = 0; i < cart.length; i++) {
-                arraysofId[i] = new Array(cart[i].quantity).fill(cart[i].id);
+                arraysOfId[i] = new Array(cart[i].quantity).fill(cart[i].id);
             }
-            let products = [].concat.apply([], arraysofId);
+            let products = [].concat.apply([], arraysOfId);
 
             let postRequest = new XMLHttpRequest();
             let data = {contact: contact, products: products}
@@ -333,22 +333,22 @@ if (navigator.onLine) {
         // if the promise resolve:
         promise.then((response) => {
             // the totalcost pass from localStorage to SessionStorage:
-            sessionStorage.setItem('ordertotalprice', localStorage.getItem('totalcost'));
+            sessionStorage.setItem('orderTotalPrice', localStorage.getItem('totalCost'));
             // localStorage is cleared:
             localStorage.clear();
             // the response from the server is stored in the sessionStorage:
-            sessionStorage.setItem('orderdetail', JSON.stringify(response));
+            sessionStorage.setItem('orderDetail', JSON.stringify(response));
 
             // link to the orderconfirmation page:
             location.href = 'orderconfirmation.html';
         // if promise doesn't resolve:
         }).catch((error) => {         
             // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-            if (localStorage.getItem("totalitemincart") === null) {
-                let displayTotalItemInCart = document.getElementById('displaytotalitem');
+            if (localStorage.getItem("totalItemInCart") === null) {
+                let displayTotalItemInCart = document.getElementById('displayTotalItem');
                 displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
               } else {
-                document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+                document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemIncart') + ')';
               }
             console.log(error);
             // the loadinggif is hided to display the error:
@@ -357,7 +357,7 @@ if (navigator.onLine) {
             if (!error) {
                 let errorMessage = document.createElement('p');
                 errorMessage.textContent = 'Error: Network Error';
-                let cartPage = document.getElementById('cartpage');
+                let cartPage = document.getElementById('cartPage');
                 cartPage.removeAttribute('hidden');
                 cartPage.removeChild(cartPage.childNodes[1]);
                 checkoutForm.setAttribute('hidden', 'true');
@@ -367,7 +367,7 @@ if (navigator.onLine) {
             } else {
                 let errorMessage = document.createElement('p');
                 errorMessage.textContent = error;
-                let cartPage = document.getElementById('cartpage');
+                let cartPage = document.getElementById('cartPage');
                 cartPage.removeAttribute('hidden');
                 cartPage.removeChild(cartPage.childNodes[1]);
                 checkoutForm.setAttribute('hidden', 'true');
@@ -381,20 +381,20 @@ if (navigator.onLine) {
 } else {
     window.document.addEventListener('DOMContentLoaded', () => {
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-        if (localStorage.getItem("totalitemincart") === null) {
-            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+        if (localStorage.getItem("totalItemInCart") === null) {
+            let displayTotalItemInCart = document.getElementById('displayTotalItem');
             displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
           } else {
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
           }
         // the loading gif is hided and error showed:
         loadingGif.setAttribute('hidden', 'true');
-        let cartPage = document.getElementById('cartpage');
+        let cartPage = document.getElementById('cartPage');
         cartPage.removeAttribute('hidden');
         cartPage.removeChild(cartPage.childNodes[1]);
-        let checkoutForm = document.getElementById('inputform');
+        let checkoutForm = document.getElementById('inputForm');
         checkoutForm.setAttribute('hidden', 'true');
-        let formContainer = document.getElementById('formcontainer');
+        let formContainer = document.getElementById('formContainer');
         formContainer.className = 'col-12 text-center pt-5'
         formContainer.innerHTML = 'No Connection';
     })

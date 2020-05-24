@@ -12,10 +12,10 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous" defer></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="../styles/style.css" type="text/css">
-        <script src="../scripts/displaysingleitem.js" type="text/javascript" defer></script>
+        <script src="../scripts/displaySingleItem.js" type="text/javascript" defer></script>
     </head>
 
-    <body id="singleitem" class="container-fluid">
+    <body id="singleItem" class="container-fluid">
 
         <header class="row p-1 p-lg-3 bg-secondary">
 
@@ -32,7 +32,7 @@
                             <a class="nav-link" href="../index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="displaytotalitem" href="cart.html"></a>
+                            <a class="nav-link" id="displayTotalItem" href="cart.html"></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#contact">Contact</a>
@@ -49,23 +49,23 @@
 
 
         <div class="row mt-4 mt-md-5 mb-5 d-flex align-items-center text-center" id="item">
-            <img class="col-12 col-md-4 m-auto" src="../images/7plQ.gif" alt="" id="loadinggif"></img>
-            <div class="card col-12 col-xl-6" id="imagecontainer" hidden>
+            <img class="col-12 col-md-4 m-auto" src="../images/7plQ.gif" alt="" id="loadingGif"></img>
+            <div class="card col-12 col-xl-6" id="imageContainer" hidden>
                 <img class="m-auto" id="image">
             </div>
-            <div id="teddydetails" class="col-12 col-xl-6 text-center mt-lg-4" hidden>
+            <div id="teddyDetails" class="col-12 col-xl-6 text-center mt-lg-4" hidden>
                 <h1 class="my-md-5" id="name"></h1>
                 <p class="my-md-5" id="description"></p>
                 <p class="my-md-5" id="price"></p>
                 <div class="d-flex justify-content-around m-auto">
                     <div class="d-flex justify-content-around w-25">
-                        <span class="bg-secondary text-light rounded-circle w-25" id="minusbutton">-</span>
-                        <span id="quantitytoadd">1</span>
-                        <span class="bg-secondary text-light rounded-circle w-25" id="plusbutton">+</span>
+                        <span class="bg-secondary text-light rounded-circle w-25" id="minusButton">-</span>
+                        <span id="quantityToAdd">1</span>
+                        <span class="bg-secondary text-light rounded-circle w-25" id="plusButton">+</span>
                     </div>
                     <div>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="colorbutton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="colorButton" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="colors"></div>
                         </div> 
                     </div>          

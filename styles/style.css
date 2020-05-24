@@ -8,7 +8,7 @@ footer {
     width: 100%;
 }
 
-#footercart {
+#footerCart {
     top: 100% !important;
 }
 
@@ -16,7 +16,7 @@ h2 {
     margin: 5% 0;
 }
 
-#salelist {
+#saleList {
     margin-bottom: 10%;
 }
 
@@ -42,7 +42,7 @@ div span {
     min-width: 100%;
 }
 
-.choosecolors {
+.chooseColors {
     cursor: pointer;
 }
 
@@ -51,7 +51,7 @@ div span {
       width: 80%;
       margin-right: 0 !important;
     }
-    #carouselslide img {
+    #carouselSlide img {
         width: 100% !important;
         }
     footer {
@@ -70,7 +70,7 @@ div span {
     form {
         width: 100% !important;
     }
-    #footerorder {
+    #footerOrder {
         top: 100% !important;
     }
 }
@@ -85,7 +85,7 @@ div span {
 }
 
 @media only screen and (max-width: 1200px) {
-    #carouselslide img {
+    #carouselSlide img {
     width: 85%;
     }
     footer {
@@ -104,13 +104,13 @@ div span {
     form {
         width: 75%;
     }
-    #footerorder {
+    #footerOrder {
         top: 95%;
     }
 }
 
 @media only screen and (min-width: 1201px) {
-    #carouselslide img {
+    #carouselSlide img {
     width: 60%;
     }
     footer {

@@ -1,5 +1,5 @@
-let orderConfirmation = document.getElementById('orderconfirmation');
-let displayTotalItemInCart = document.getElementById('displaytotalitem');
+let orderConfirmation = document.getElementById('orderConfirmation');
+let displayTotalItemInCart = document.getElementById('displayTotalItem');
 
 // check if there is Internet Connection:
 if (navigator.onLine) {
@@ -10,19 +10,19 @@ if (navigator.onLine) {
         thankYouText.setAttribute('class', 'mb-5')
         thankYouText.textContent = 'Thanks for your order!';
         orderConfirmation.appendChild(thankYouText);
-        let productsList = JSON.parse(sessionStorage.getItem('orderdetail')).products;
-        let contactInformation = JSON.parse(sessionStorage.getItem('orderdetail')).contact;
+        let productsList = JSON.parse(sessionStorage.getItem('orderDetail')).products;
+        let contactInformation = JSON.parse(sessionStorage.getItem('orderDetail')).contact;
         let orderIdText = document.createElement('h2');
         orderIdText.textContent = 'Order Number:';
         orderConfirmation.appendChild(orderIdText);
         let orderNumber = document.createElement('p');
-        orderNumber.textContent = JSON.parse(sessionStorage.getItem('orderdetail')).orderId;
+        orderNumber.textContent = JSON.parse(sessionStorage.getItem('orderDetail')).orderId;
         orderConfirmation.appendChild(orderNumber);
         let totalCostText = document.createElement('h2');
         totalCostText.textContent = 'Total Cost:';
         orderConfirmation.appendChild(totalCostText);
         let totalCost = document.createElement('p');
-        totalCost.textContent = '$' + (sessionStorage.getItem('ordertotalprice') / 100).toFixed(2);
+        totalCost.textContent = '$' + (sessionStorage.getItem('orderTotalPrice') / 100).toFixed(2);
         orderConfirmation.appendChild(totalCost);
         let productsListText = document.createElement('h2');
         productsListText.textContent = 'Products List:';
@@ -72,8 +72,8 @@ if (navigator.onLine) {
 // if there is no connection show error:
 } else {
     window.document.addEventListener('DOMContentLoaded', () => {
-                // Cart in the navbar is set to 0:
-                displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
+        // Cart in the navbar is set to 0:
+        displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
         orderConfirmation.innerHTML = 'No Connection';
     })
 }

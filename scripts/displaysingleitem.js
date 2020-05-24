@@ -1,6 +1,6 @@
 let singleItem = document.getElementById('item');
-let loadingGif = document.getElementById('loadinggif');
-let teddyDetails = document.getElementById('teddydetails');
+let loadingGif = document.getElementById('loadingGif');
+let teddyDetails = document.getElementById('teddyDetails');
 let alertMessage = document.getElementById('alert');
 
 // if there is Internet Connection:
@@ -29,7 +29,7 @@ if (navigator.onLine) {
         // display teddy description with price, name, quantity selection, color dropdown and button to add to the cart:
         teddyDetails.removeAttribute('hidden');
         // display teddy image:
-        document.getElementById('imagecontainer').removeAttribute('hidden');
+        document.getElementById('imageContainer').removeAttribute('hidden');
         let name = document.getElementById('name');
         name.textContent = response.name;
         let image = document.getElementById('image');
@@ -39,11 +39,11 @@ if (navigator.onLine) {
         let price = document.getElementById('price');
         price.textContent = '$' + (response.price / 100).toFixed(2);
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-        if (localStorage.getItem("totalitemincart") === null) {
-            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+        if (localStorage.getItem("totalItemInCart") === null) {
+            let displayTotalItemInCart = document.getElementById('displayTotalItem');
             displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
         } else {
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
         }
 
         // set an object with properties equal to the response got from the server:
@@ -56,8 +56,8 @@ if (navigator.onLine) {
         }
 
         // minus quantity button:
-        let quantityToAdd = document.getElementById('quantitytoadd');
-        let minusButton = document.getElementById('minusbutton');
+        let quantityToAdd = document.getElementById('quantityToAdd');
+        let minusButton = document.getElementById('minusButton');
         minusButton.addEventListener('click', () => {
             // if the quantity is equal or greater than 2 decrease quantity by one when minus button is pressed:
             if (teddy.quantity >= 2 && quantityToAdd.textContent >= 2) {
@@ -71,33 +71,33 @@ if (navigator.onLine) {
         });
 
         // increase quantity button by 1 when pressed:
-        let plusButton = document.getElementById('plusbutton');
+        let plusButton = document.getElementById('plusButton');
         plusButton.addEventListener('click', () => {
             teddy.quantity = teddy.quantity + 1;
             quantityToAdd.textContent = Number(quantityToAdd.textContent) + 1;
         });
 
         // set the text content for the color dropdown button:
-        let colorDrop = document.getElementById('colorbutton');
+        let colorDrop = document.getElementById('colorButton');
         colorDrop.textContent = response.colors[0];
 
         // set the colors in colors dropdown:
-        let dropdown = document.getElementById('colors');
+        let dropDown = document.getElementById('colors');
         for (i = 0; i < response.colors.length; i++) { 
             let colorsOption = document.createElement('p');
             colorsOption.textContent = response.colors[i];
             colorsOption.setAttribute('class', 'dropdown-item')
-            dropdown.appendChild(colorsOption); 
+            dropDown.appendChild(colorsOption); 
             colorsOption.setAttribute('class', 'choosecolors')              
         }
 
         // if teddy has just one variant of color the dropdown is not showed:
-        if (dropdown.childElementCount <= 1) {
-            dropdown.setAttribute('hidden', 'true');
+        if (dropDown.childElementCount <= 1) {
+            dropDown.setAttribute('hidden', 'true');
         }
 
         // the text of the color dropdown button is equal to the text of the clicked color:
-        let chooseColors = document.querySelectorAll('.choosecolors');        
+        let chooseColors = document.querySelectorAll('.chooseColors');        
         for (i = 0; i < chooseColors.length; i++) {
             chooseColors[i].addEventListener('click', ($event) => {
                 teddy.color = $event.target.textContent;
@@ -122,7 +122,7 @@ if (navigator.onLine) {
             addItemToCart();
             totalCost();
             // set the quantity showed in the basket equal to the value of the key 'totalitemincart' in the LocalStorage:
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
             // when the button to add item to the cart is pressed, the colors dropdown and the menu to choose the quantity get resetted:
             colorDrop.textContent = response.colors[0];
             teddy.quantity = 1;
@@ -132,12 +132,12 @@ if (navigator.onLine) {
 
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
         const totalItemInCart = () => {
-            let totalItem = localStorage.getItem('totalitemincart');
+            let totalItem = localStorage.getItem('totalItemInCart');
             totalItem = parseInt(totalItem);
             if (totalItem) {
-                localStorage.setItem('totalitemincart', totalItem + teddy.quantity);
+                localStorage.setItem('totalItemInCart', totalItem + teddy.quantity);
             } else {
-                localStorage.setItem('totalitemincart', teddy.quantity);
+                localStorage.setItem('totalItemInCart', teddy.quantity);
             }
         }
 
@@ -177,22 +177,22 @@ if (navigator.onLine) {
 
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
         const totalCost = () => {
-            let cartCost = localStorage.getItem('totalcost');
+            let cartCost = localStorage.getItem('totalCost');
             if (cartCost != null) {
                 cartCost = parseInt(cartCost);
-                localStorage.setItem('totalcost', cartCost + (teddy.price * teddy.quantity));
+                localStorage.setItem('totalCost', cartCost + (teddy.price * teddy.quantity));
             } else {
-                localStorage.setItem('totalcost', teddy.price * teddy.quantity);
+                localStorage.setItem('totalCost', teddy.price * teddy.quantity);
             }
         }
         // if the Promise doesn't resolve:
     }).catch((error) => {
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-        if (localStorage.getItem("totalitemincart") === null) {
-            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+        if (localStorage.getItem("totalItemInCart") === null) {
+            let displayTotalItemInCart = document.getElementById('displayTotalItem');
             displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
           } else {
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
           }
         console.log(error);
         // remove loading gif:
@@ -201,13 +201,13 @@ if (navigator.onLine) {
         teddyDetails.removeAttribute('hidden');
         // if it doesn't get response from server show 'Network Error' otherwise show the response from the server:
         if (!error) {
-            let errorMessage = document.getElementById('teddydetails');
+            let errorMessage = document.getElementById('teddyDetails');
             errorMessage.classList.remove('col-xl-6');
             errorMessage.className = 'overflow-auto text-center m-auto p-5'
             singleItem.removeChild(errorMessage.previousElementSibling);
             errorMessage.innerHTML = 'Error: Network Error';
         } else {
-            let errorMessage = document.getElementById('teddydetails');
+            let errorMessage = document.getElementById('teddyDetails');
             errorMessage.classList.remove('col-xl-6');
             errorMessage.className = 'overflow-auto text-center m-auto p-5'
             let singleItem = document.getElementById('item');
@@ -223,13 +223,13 @@ if (navigator.onLine) {
     teddyDetails.removeAttribute('hidden');
     window.document.addEventListener('DOMContentLoaded', () => {
         // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-        if (localStorage.getItem("totalitemincart") === null) {
-            let displayTotalItemInCart = document.getElementById('displaytotalitem');
+        if (localStorage.getItem("totalItemInCart") === null) {
+            let displayTotalItemInCart = document.getElementById('displayTotalItem');
             displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
           } else {
-            document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+            document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
           }
-        let errorMessage = document.getElementById('teddydetails');
+        let errorMessage = document.getElementById('teddyDetails');
         errorMessage.classList.remove('col-xl-6');
         errorMessage.className = 'overflow-auto text-center m-auto p-5'
         let singleItem = document.getElementById('item');

@@ -34,7 +34,7 @@ if (navigator.onLine) {
       } else {
         carouselItem.className = 'carousel-item';
       }
-      let carouselSlide = document.getElementById('carouselslide');
+      let carouselSlide = document.getElementById('carouselSlide');
       carouselSlide.appendChild(carouselItem);
       let carouselItemName = document.createElement('h2');
       carouselItemName.textContent = response[i].name;
@@ -49,42 +49,42 @@ if (navigator.onLine) {
       carouselItemLink.appendChild(carouselItemImage);   
     } 
     // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-    if (localStorage.getItem("totalitemincart") === null) {
-      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+    if (localStorage.getItem("totalItemInCart") === null) {
+      let displayTotalItemInCart = document.getElementById('displayTotalItem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
     } else {
-      document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+      document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
     }
     // if Promise doesn't resolve:
   }).catch((error) => {
     // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-    if (localStorage.getItem("totalitemincart") === null) {
-      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+    if (localStorage.getItem("totalItemInCart") === null) {
+      let displayTotalItemInCart = document.getElementById('displayTotalItem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
     } else {
-      document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+      document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
     }
     console.log(error);
     // if it doesn't get response from server show 'Network Error' otherwise show the response from the server:
     if (!error) {
-      salelist.className = 'm-auto overflow-auto p-5 text-center';
-      salelist.innerHTML = 'Error: Network Error';
+      saleList.className = 'm-auto overflow-auto p-5 text-center';
+      saleList.innerHTML = 'Error: Network Error';
     } else {
-      salelist.className = 'm-auto overflow-auto p-5 text-center';
-      salelist.innerHTML = error;
+      saleList.className = 'm-auto overflow-auto p-5 text-center';
+      saleList.innerHTML = error;
     }
   });
   // if there is not connection to internet show error 'No Connection':
 } else {
   window.document.addEventListener('DOMContentLoaded', () => {
     // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage: 
-    if (localStorage.getItem("totalitemincart") === null) {
-      let displayTotalItemInCart = document.getElementById('displaytotalitem');
+    if (localStorage.getItem("totalItemInCart") === null) {
+      let displayTotalItemInCart = document.getElementById('displayTotalItem');
       displayTotalItemInCart.textContent = 'Cart' + ' ' + '(' + 0 + ')';
     } else {
-      document.getElementById('displaytotalitem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalitemincart') + ')';
+      document.getElementById('displayTotalItem').textContent = 'Cart' + ' ' + '(' + localStorage.getItem('totalItemInCart') + ')';
     }
-    salelist.className = 'p-5 text-center';
-    salelist.innerHTML = 'No Connection';
+    saleList.className = 'p-5 text-center';
+    saleList.innerHTML = 'No Connection';
   })
 };
