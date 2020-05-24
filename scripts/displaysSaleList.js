@@ -74,7 +74,7 @@ if (navigator.onLine) {
         saleList.innerHTML = 'Error: Network Error'
       } else {
         saleList.className = 'm-auto overflow-auto p-5 text-center'
-        saleList.innerHTML = error
+        saleList.innerHTML = 'There is a problem with the back-end';
       }
     })
   // if there is not connection to internet show error 'No Connection':
