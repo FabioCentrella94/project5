@@ -440,7 +440,7 @@ if (navigator.onLine) {
           // if there is answer from server, display the answer from server as an error:
         } else {
           let errorMessage = document.createElement('p')
-          errorMessage.textContent = 'There is a problem with the back-end';
+          errorMessage.textContent = error
           let cartPage = document.getElementById('cartPage')
           cartPage.removeAttribute('hidden')
           cartPage.removeChild(cartPage.childNodes[1])
