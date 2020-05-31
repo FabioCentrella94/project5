@@ -410,7 +410,7 @@ if (navigator.onLine) {
         sessionStorage.setItem('orderDetail', JSON.stringify(response))
 
         // link to the orderconfirmation page:
-        location.href = 'orderconfirmation.html'
+        location.href = 'orderConfirmation.html'
         // if promise doesn't resolve:
       })
       .catch(error => {
