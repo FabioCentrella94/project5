@@ -1,11 +1,11 @@
 html {
-    position: relative;
+    position  : relative;
     min-height: 100%;
 }
 
 footer {
     position: absolute;
-    width: 100%;
+    width   : 100%;
 }
 
 #footerCart {
@@ -26,7 +26,7 @@ h2 {
 
 #cart img {
     height: 50%;
-    width: 100%;
+    width : 100%;
 }
 
 button {
@@ -47,29 +47,38 @@ div span {
 }
 
 @media only screen and (max-width: 480px) {
-    header a, img {
-      width: 80%;
-      margin-right: 0 !important;
+
+    header a,
+    img {
+        width       : 80%;
+        margin-right: 0 !important;
     }
+
     #carouselSlide img {
         width: 100% !important;
-        }
+    }
+
     footer {
         top: 80% !important;
     }
+
     #item {
         margin-bottom: 50% !important;
     }
+
     #cart {
         padding-bottom: unset !important;
     }
+
     #cart img {
         height: 45% !important;
-        width: 100% !important;
+        width : 100% !important;
     }
+
     form {
         width: 100% !important;
     }
+
     #footerOrder {
         top: 100% !important;
     }
@@ -79,6 +88,7 @@ div span {
     footer {
         top: 90%;
     }
+
     #image {
         width: 100% !important;
     }
@@ -86,24 +96,30 @@ div span {
 
 @media only screen and (max-width: 1200px) {
     #carouselSlide img {
-    width: 85%;
+        width: 85%;
     }
+
     footer {
-    top: 95%;
+        top: 95%;
     }
+
     #item {
         margin-bottom: 10%;
     }
+
     #image {
         width: 60%;
     }
+
     #cart img {
         height: 60%;
-        width: 70%;
+        width : 70%;
     }
+
     form {
         width: 75%;
     }
+
     #footerOrder {
         top: 95%;
     }
@@ -111,21 +127,26 @@ div span {
 
 @media only screen and (min-width: 1201px) {
     #carouselSlide img {
-    width: 60%;
+        width: 60%;
     }
+
     footer {
-    top: 100%;
+        top: 100%;
     }
+
     #image {
         width: 100%;
     }
+
     #cart {
         max-height: 100vh;
     }
+
     #cart img {
         height: 45%;
-        width: 100%;
+        width : 100%;
     }
+
     form {
         width: 50%;
     }
