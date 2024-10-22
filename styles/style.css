@@ -150,4 +150,9 @@ div span {
     form {
         width: 50%;
     }
+
+    #formContainer {
+        justify-content: left !important;
+        padding-left: 20%;
+    }
 }
