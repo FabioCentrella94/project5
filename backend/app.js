@@ -1,4 +1,5 @@
 // DEVELOPMENT ENVIRONMENT
+/*
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -57,9 +58,9 @@ app.get("/", function (req, res) {
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 module.exports = app;
+*/
 
 //PRODUCTION ENVIRONMENT
-/*
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -117,4 +118,3 @@ app.get("/", function (req, res) {
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 module.exports = app;
-*/

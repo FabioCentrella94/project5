@@ -10,9 +10,9 @@ if (navigator.onLine) {
     let url = window.location.search.replace("?", "");
     let apiRequest = new XMLHttpRequest();
     // DEVELOPMENT ENVIRONMENT
-    apiRequest.open("GET", "http://localhost:3000/api/teddies/" + url);
+    //apiRequest.open("GET", "http://localhost:3000/api/teddies/" + url);
     // PRODUCTION ENVIRONMENT
-    // apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/" + url);
+    apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/" + url);
     apiRequest.send();
     apiRequest.onreadystatechange = () => {
       if (apiRequest.readyState === 4) {
@@ -54,6 +54,7 @@ if (navigator.onLine) {
       // set an object with properties equal to the response got from the server:
 
       // DEVELOPMENT ENVIRONMENT
+      /*
       let teddy = {
         id: response._id,
         image: response.imageUrl.replace("http://localhost:3000/", "./"),
@@ -61,9 +62,9 @@ if (navigator.onLine) {
         quantity: 1,
         price: response.price,
       };
+      */
 
       // PRODUCTION ENVIRONMENT
-      /*
       let teddy = {
         id: response._id,
         image: response.imageUrl.replace(
@@ -74,7 +75,6 @@ if (navigator.onLine) {
         quantity: 1,
         price: response.price,
       };
-      */
 
       // minus quantity button:
       let quantityToAdd = document.getElementById("quantityToAdd");

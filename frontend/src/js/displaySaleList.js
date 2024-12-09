@@ -7,9 +7,9 @@ if (navigator.onLine) {
   const promise = new Promise((resolve, reject) => {
     let apiRequest = new XMLHttpRequest();
     // DEVELOPMENT ENVIRONMENT
-    apiRequest.open("GET", "http://localhost:3000/api/teddies/");
+    //apiRequest.open("GET", "http://localhost:3000/api/teddies/");
     // PRODUCTION ENVIRONMENT
-    // apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/");
+    apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/");
     apiRequest.send();
     apiRequest.onreadystatechange = () => {
       if (apiRequest.readyState === 4) {
