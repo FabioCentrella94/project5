@@ -66,7 +66,7 @@ exports.orderTeddies = (req, res, next) => {
   }
   Promise.all(queries)
     .then((teddies) => {
-      const orderId = uuid();
+      const orderId = uuid.v4();
       return res.status(201).json({
         contact: req.body.contact,
         products: teddies,
@@ -74,6 +74,7 @@ exports.orderTeddies = (req, res, next) => {
       });
     })
     .catch((error) => {
+      console.log(error)
       return res.status(500).json(error);
     });
 };

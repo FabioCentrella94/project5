@@ -9,7 +9,10 @@ if (navigator.onLine) {
   const promise = new Promise((resolve, reject) => {
     let url = window.location.search.replace("?", "");
     let apiRequest = new XMLHttpRequest();
+    // DEVELOPMENT ENVIRONMENT
     apiRequest.open("GET", "http://localhost:3000/api/teddies/" + url);
+    // PRODUCTION ENVIRONMENT
+    // apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/" + url);
     apiRequest.send();
     apiRequest.onreadystatechange = () => {
       if (apiRequest.readyState === 4) {
@@ -33,7 +36,7 @@ if (navigator.onLine) {
       let name = document.getElementById("name");
       name.textContent = response.name;
       let image = document.getElementById("image");
-      image.src = response.imageUrl;
+      image.src = response.imageUrl.replace("http://localhost:3000/", "./");
       let description = document.getElementById("description");
       description.textContent = response.description;
       let price = document.getElementById("price");
@@ -49,16 +52,29 @@ if (navigator.onLine) {
       }
 
       // set an object with properties equal to the response got from the server:
+
+      // DEVELOPMENT ENVIRONMENT
+      let teddy = {
+        id: response._id,
+        image: response.imageUrl.replace("http://localhost:3000/", "./"),
+        color: response.colors[0],
+        quantity: 1,
+        price: response.price,
+      };
+
+      // PRODUCTION ENVIRONMENT
+      /*
       let teddy = {
         id: response._id,
         image: response.imageUrl.replace(
-          "http://localhost:3000/",
-          "../../backend/"
+          "https://project5-backend.myportfolio.training/",
+          "./"
         ),
         color: response.colors[0],
         quantity: 1,
         price: response.price,
       };
+      */
 
       // minus quantity button:
       let quantityToAdd = document.getElementById("quantityToAdd");

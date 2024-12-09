@@ -6,7 +6,10 @@ if (navigator.onLine) {
   // Promise:
   const promise = new Promise((resolve, reject) => {
     let apiRequest = new XMLHttpRequest();
+    // DEVELOPMENT ENVIRONMENT
     apiRequest.open("GET", "http://localhost:3000/api/teddies/");
+    // PRODUCTION ENVIRONMENT
+    // apiRequest.open("GET", "https://project5-backend.myportfolio.training/api/teddies/");
     apiRequest.send();
     apiRequest.onreadystatechange = () => {
       if (apiRequest.readyState === 4) {
@@ -41,11 +44,11 @@ if (navigator.onLine) {
         carouselItemName.className = "mb-3 my-3 my-md-5";
         carouselItem.appendChild(carouselItemName);
         let carouselItemLink = document.createElement("a");
-        carouselItemLink.href = "pages/singleItem.html" + "?" + response[i]._id;
+        carouselItemLink.href = "singleItem.html" + "?" + response[i]._id;
         carouselItem.appendChild(carouselItemLink);
         let carouselItemImage = document.createElement("img");
         carouselItemImage.className = "border border-secondary";
-        carouselItemImage.src = response[i].imageUrl;
+        carouselItemImage.src = response[i].imageUrl.replace("http://localhost:3000/", "./");
         carouselItemLink.appendChild(carouselItemImage);
       }
       // if the key 'totalitemincart' in localstorage is not set the basket show 0 as item in in cart otherwise show the value of the key 'totalitemincart' in the LocalStorage:

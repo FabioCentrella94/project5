@@ -385,7 +385,10 @@ if (navigator.onLine) {
 
       let postRequest = new XMLHttpRequest();
       let data = { contact: contact, products: products };
+      // DEVELOPMENT ENVIRONMENT
       let url = "http://localhost:3000/api/teddies/order";
+      // PRODUCTION ENVIRONMENT
+      // let url = "https://project5-backend.myportfolio.training/api/teddies/order";
       postRequest.open("POST", url, true);
       postRequest.setRequestHeader("Content-type", "application/json");
       postRequest.send(JSON.stringify(data));
