@@ -80,10 +80,13 @@ module.exports = {
   optimization: {
     runtimeChunk: "single",
     splitChunks: {
-      minSize: 5000,
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/].+\.(js)$/,
+          test: /[\\/]node_modules[\\/].+\.(js|ts)$/,
+          chunks: "all",
+        },
+        js: {
+          test: /[\\/]js[\\/].+\.(js|ts)$/,
           chunks: "all",
         },
       },
