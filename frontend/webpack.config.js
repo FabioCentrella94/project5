@@ -3,7 +3,6 @@ const HtmlBundlerPlugin = require("html-bundler-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const { CoreJSPlugin } = require("webpack-plugin-corejs");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
@@ -28,7 +27,6 @@ module.exports = {
     path: __dirname + "/dist",
   },
   plugins: [
-    new CoreJSPlugin({ modules: "core-js/es" }),
     new CopyPlugin({
       patterns: [
         { from: "src/images/teddy_1.jpg", to: "images" },
