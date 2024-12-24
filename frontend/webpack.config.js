@@ -28,7 +28,7 @@ module.exports = {
     path: __dirname + "/dist",
   },
   plugins: [
-    new CoreJSPlugin(),
+    new CoreJSPlugin({ modules: "core-js/es" }),
     new CopyPlugin({
       patterns: [
         { from: "src/images/teddy_1.jpg", to: "images" },
@@ -51,7 +51,17 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ["css-loader"],
+        use: [
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [["autoprefixer", {}]],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpe?g|svg|ico|gif)/,
@@ -68,6 +78,16 @@ module.exports = {
     ],
   },
   optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      minSize: 5000,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/].+\.(js)$/,
+          chunks: "all",
+        },
+      },
+    },
     minimize: true,
     minimizer: [
       new CssMinimizerPlugin(),
