@@ -1,6 +1,6 @@
 # E-COMMERCE WEB APPLICATION #
 
-For this project I've built only the frontend with Vanilla JavaScript to consume API's served from the backend.
+For this project I've built only the frontend with Vanilla JavaScript and Bootstrap to consume API's served from the backend.
 <br>
 Deployed both frontend and backend on AWS using App Runner, S3 and CloudFront.
 <br>
